@@ -3,5 +3,6 @@
 class UsersController < ApplicationController
   def index
     @message = 'test'
+    @users = User.all
   end
 end

@@ -1,1 +1,39 @@
 <p><%= @message %></p>
+<table class=maintable border="1">
+  <tbody>
+    <tr>
+      <th>user_id</th>
+      <th>screen_id</th>
+      <th>name</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th>last_cas</th>
+      <th>is_recordable</th>
+      <th>is_casting</th>
+      <th>comment_count</th>
+      <th>max_view_count</th>
+      <th>current_view_count</th>
+      <th>total_view_count</th>
+      <th>is_compression</th>
+      <th>remark</th>
+    </tr>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.user_id %></td>
+      <td><%= user.screen_id %></td>
+      <td><%= user.name %></td>
+      <td><%= user.created_at %></td>
+      <td><%= user.updated_at %></td>
+      <td><%= user.last_cas %></td>
+      <td><%= user.is_recordable %></td>
+      <td><%= user.is_casting %></td>
+      <td><%= user.comment_count %></td>
+      <td><%= user.max_view_count %></td>
+      <td><%= user.current_view_count %></td>
+      <td><%= user.total_view_count %></td>
+      <td><%= user.is_compression %></td>
+      <td><%= user.remark %></td>      
+    </tr>
+    <% end %>
+  </tbody>
+</table>
