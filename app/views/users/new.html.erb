@@ -1,0 +1,18 @@
+<%= form_for @user do |f| %>
+<p>
+    <%= f.label :screen_id %>
+    <%= f.text_field :screen_id %>
+</p>
+
+<p>
+    <label><%= f.radio_button :is_compression, true %> はい </label>
+    <label><%= f.radio_button :is_compression, false %> いいえ</label>
+</p>
+
+<p>
+    <%= f.label :remark %>
+    <%= f.text_field :remark %>
+</p>
+
+<%= f.submit %>
+<% end %>
