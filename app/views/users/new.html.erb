@@ -5,8 +5,8 @@
 </p>
 
 <p>
-    <label><%= f.radio_button :is_compression, true %> はい </label>
-    <label><%= f.radio_button :is_compression, false %> いいえ</label>
+    <%= f.label :is_compression %>
+    <%= f.check_box :is_compression %>
 </p>
 
 <p>
