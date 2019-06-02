@@ -15,6 +15,7 @@ class DevelopersController < ApplicationController
     if @developer.save
       # TODO: flashが必要かも含めて遷移先を今後変更する
       # Handle a successful save.
+      log_in @developer
       flash[:success] = 'Welcome to the Sample App!'
       render 'new'
     else

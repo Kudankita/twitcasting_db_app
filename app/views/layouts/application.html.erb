@@ -16,9 +16,13 @@
       <li>
         <%=link_to '戻る', :back%>
       </li>
-      <li>
-        <%=link_to 'サインアウト', '#' %>
-      </li>
+      <% if logged_in? %>
+        <li>
+          <%=link_to 'サインアウト', logout_path, method: "delete" %>
+        </li>
+      <% else %>
+        <li><%= link_to "Log in", login_path %></li>
+      <% end %>
     </ul>
   </header>
   <% flash.each do |message_type, message| %>
