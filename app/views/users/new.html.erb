@@ -1,0 +1,18 @@
+<%= form_for @user do |f| %>
+<p>
+    <%= f.label :screen_id %>
+    <%= f.text_field :screen_id %>
+</p>
+
+<p>
+    <%= f.label :is_compression %>
+    <%= f.check_box :is_compression %>
+</p>
+
+<p>
+    <%= f.label :remark %>
+    <%= f.text_area :remark %>
+</p>
+
+<%= f.submit %>
+<% end %>

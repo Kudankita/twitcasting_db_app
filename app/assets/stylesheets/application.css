@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+.header-menus {
+    float: right;
+    padding-right: 20px;
+}
+
+li {
+    display: inline-block;
+}
