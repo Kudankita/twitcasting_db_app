@@ -13,8 +13,6 @@ module SessionsHelper
 
   # ユーザーがログインしていればtrue、その他ならfalseを返す
   def logged_in?
-    p 'this is logged_in?'
-    p current_developer
     !current_developer.nil?
   end
 
@@ -22,5 +20,13 @@ module SessionsHelper
   def log_out
     session.delete(:developer_id)
     @current_developer = nil
+  end
+
+  def authenticate_user
+    current_developer
+    if @current_developer.nil?
+      flash[:notice] = 'ログインが必要です'
+      redirect_to(login_url)
+    end
   end
 end
