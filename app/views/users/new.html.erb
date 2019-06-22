@@ -1,18 +1,19 @@
 <%= form_for @user do |f| %>
-<p>
+  <%= render 'shared/user_error_messages' %>
+  <p>
     <%= f.label :screen_id %>
     <%= f.text_field :screen_id %>
-</p>
+  </p>
 
-<p>
+  <p>
     <%= f.label :is_compression %>
     <%= f.check_box :is_compression %>
-</p>
+  </p>
 
-<p>
+  <p>
     <%= f.label :remark %>
     <%= f.text_area :remark %>
-</p>
+  </p>
 
-<%= f.submit %>
+  <%= f.submit %>
 <% end %>

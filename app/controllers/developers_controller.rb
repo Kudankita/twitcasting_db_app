@@ -3,18 +3,12 @@
 class DevelopersController < ApplicationController
   def new
     @developer = Developer.new
-    # if @developer.save
-    #   # Handle a successful save.
-    # else
-    #   render 'new'
-    # end
   end
 
   def create
     @developer = Developer.new(user_params)
     if @developer.save
-      # TODO: flashが必要かも含めて遷移先を今後変更する
-      # Handle a successful save.
+      # TODO: 実際には新規ユーザ作成機能は不要。最後に削除
       log_in @developer
       flash[:success] = 'Welcome to the Sample App!'
       render 'new'
