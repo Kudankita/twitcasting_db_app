@@ -1,7 +1,6 @@
 Rails:
   Enabled: true
 
-# 30 まではギリギリ許せる範囲だった
 Metrics/AbcSize:
   Max: 30
 
