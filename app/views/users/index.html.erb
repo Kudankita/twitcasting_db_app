@@ -1,6 +1,6 @@
 <%= link_to '新規登録', 'users/new', method: "get" %>
-<table class=maintable border="1">
-  <tbody>
+<table class="table table-bordered">
+  <thead>
   <tr>
     <th>user_id</th>
     <th>screen_id</th>
@@ -17,6 +17,8 @@
     <th>is_compression</th>
     <th>remark</th>
   </tr>
+  </thead>
+  <tbody>
   <% @users.each do |user| %>
     <tr>
       <td><%= user.user_id %></td>

@@ -4,7 +4,6 @@ class UsersController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @message = 'test'
     @users = User.all
   end
 
