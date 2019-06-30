@@ -3,13 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Developer, type: :model do
-  before do
-    @developer = FactoryBot.build(:developer)
-  end
   describe '正常系' do
     context '名前、アドレス、パスワードすべてが問題ない場合' do
       it '正常なデータと判定される' do
-        expect(@developer).to be_valid
+        expect(FactoryBot.build(:developer)).to be_valid
       end
     end
   end
