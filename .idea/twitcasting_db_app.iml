@@ -1417,6 +1417,19 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="spring-commands-rspec (vbundled(1.0.4)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/spring-commands-rspec-1.0.4/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/spring-commands-rspec-1.0.4/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="spring-watcher-listen (vbundled(2.0.1)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
