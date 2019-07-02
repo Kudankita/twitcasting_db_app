@@ -641,6 +641,30 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="launchy (vbundled(2.4.3)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/bin" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/lib" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/spec" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/tasks" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/bin" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/lib" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/spec" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/tasks" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/bin" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/spec" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/launchy-2.4.3/tasks" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="libv8 (vbundled(7.3.492.27.1)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
