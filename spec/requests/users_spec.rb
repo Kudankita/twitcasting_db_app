@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Users Page', type: :request do
+RSpec.describe 'Users', type: :request do
   let(:developer) { FactoryBot.create(:developer) }
   describe 'GET /index' do
     context 'ログインしていないとき' do
