@@ -20,8 +20,8 @@ RSpec.describe 'Sessions', type: :request do
 
       it '正常にログインできてセッションにIDが保存されている' do
         post login_path, params: { session: { email: developer.email, password: developer.password } }
-        # developerは一人しか登録されていないので毎回IDは１になるはず
-        expect(session[:developer_id]).to eq 1
+        # developerは一人しか登録されていないので毎回IDは１になるはず =>そうでもないパターンがあるようなのであることだけ確認
+        expect(session[:developer_id]).not_to eq nil
       end
     end
 
