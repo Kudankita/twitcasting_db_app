@@ -34,3 +34,5 @@ vendor/bundle
 /config/master.key
 
 .vscode/*
+/.idea/railways.cache
+coverage/*

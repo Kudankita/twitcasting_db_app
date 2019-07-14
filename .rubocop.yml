@@ -8,6 +8,7 @@ Metrics/LineLength:
   Max: 160
   Exclude:
     - "db/migrate/*.rb"
+    - "spec/**/*.rb"
 
 #https://qiita.com/hi-nakamura/items/fb841be12566e7f579f0 からコピー
 
