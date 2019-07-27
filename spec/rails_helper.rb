@@ -65,6 +65,8 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
+  config.include ActiveSupport::Testing::TimeHelpers
+
   config.before(:each) do |example|
     if example.metadata[:type] == :system
       if example.metadata[:js]
