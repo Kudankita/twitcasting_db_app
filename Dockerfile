@@ -9,7 +9,8 @@ RUN bundle install
 COPY . /myapp
 RUN bundle exec rake assets:precompile RAILS_ENV=production && \
     bundle exec rake db:migrate RAILS_ENV=production && \
-    bundle exec rake db:migrate RAILS_ENV=test
+    bundle exec rake db:migrate RAILS_ENV=test && \
+    bundle exec rails db:seed RAILS_ENV=production
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/

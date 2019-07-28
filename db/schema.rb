@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_22_155321) do
+ActiveRecord::Schema.define(version: 2019_07_28_115950) do
 
   create_table "developers", force: :cascade do |t|
     t.string "name"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2019_06_22_155321) do
     t.integer "current_view_count"
     t.integer "total_view_count"
     t.text "remark"
-    t.boolean "is_compression"
+    t.boolean "is_compression", default: false
     t.boolean "is_deleted"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
