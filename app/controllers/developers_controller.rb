@@ -2,17 +2,17 @@
 
 class DevelopersController < ApplicationController
   def new
-    @developer = Developer.new
+    @developer = Developer.new unless Rails.env.production?
   end
 
   def create
-    @developer = Developer.new(user_params)
-    if @developer.save
-      # TODO: 実際には新規ユーザ作成機能は不要。最後に削除
-      log_in @developer
-      flash[:success] = 'Welcome to the Sample App!'
-      render 'new'
-    else
+    # 実際には新規登録機能は不要なためproduction環境では機能を無効化
+    unless Rails.env.production?
+      @developer = Developer.new(user_params)
+      if @developer.save
+        log_in @developer
+        flash[:success] = 'Welcome to the Sample App!'
+      end
       render 'new'
     end
   end

@@ -1,5 +1,5 @@
 <h1>Sign up</h1>
-<%= form_for(@developer) do |f| %>
+<%= form_for @developer, url: developers_path do |f| %>
     <%= render 'shared/error_messages' %>
     
     <%= f.label :name %>
