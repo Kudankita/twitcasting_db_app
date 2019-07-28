@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe RecordMovieJob, type: :job do
   include ActiveJob::TestHelper
-  subject(:job) { described_class.perform_later('param_1', 'param_2') }
+  subject(:job) { described_class.perform_later('params_1', 'param_2.mp4') }
   xit 'executes perform' do
     # TODO: 最後に消す
     perform_enqueued_jobs(&method(:job))
