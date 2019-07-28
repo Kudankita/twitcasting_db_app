@@ -89,5 +89,18 @@ RSpec.describe 'Movies', type: :request do
         expect(response).to be_successful
       end
     end
+
+    context '録画する必要のあるIDのPOSTを受信し、そのscreen_idに:が含まれていたとき' do
+      before do
+        @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting:jp', is_recordable: true
+        post movie_path, params: @movie_params
+      end
+      it '録画ジョブの引数にURLとscreen_idが変換されたファイル名が渡されて起動される' do
+        expect(RecordMovieJob).to have_been_enqueued.with('m3u8', 'twitcasting_jp(2004年11月24日11時44分44秒).mp4')
+      end
+      it '正常なレスポンスを返す' do
+        expect(response).to be_successful
+      end
+    end
   end
 end
