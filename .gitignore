@@ -36,3 +36,4 @@ vendor/bundle
 .vscode/*
 /.idea/railways.cache
 coverage/*
+/db/*.csv
