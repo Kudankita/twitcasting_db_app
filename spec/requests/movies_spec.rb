@@ -19,7 +19,7 @@ RSpec.describe 'Movies', type: :request do
                             last_owner_comment: 'もいもい',
                             category: 'girls',
                             link: 'http://twitcasting.tv/twitcasting_jp/movie/189037369',
-                            is_live: false,
+                            is_live: true,
                             is_recorded: false,
                             comment_count: 2124,
                             large_thumbnail: 'http',
@@ -58,6 +58,22 @@ RSpec.describe 'Movies', type: :request do
       end
       it '録画ジョブの引数にURLとファイル名が渡されて起動される' do
         expect(RecordMovieJob).to have_been_enqueued.with('m3u8', "#{@user_to_record.screen_id}(#{Time.zone.now.to_s :custom}).mp4")
+      end
+      it '正常なレスポンスを返す' do
+        expect(response).to be_successful
+      end
+    end
+
+    context '録画終了のPOSTを受信したとき' do
+      before do
+        @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting_jp', is_recordable: true
+        # is_live(ライブ配信中かどうか)がfalseのボディを作成
+        movie_params_live_false = @movie_params
+        movie_params_live_false[:movie][:is_live] = 'false'
+        post movie_path, params: movie_params_live_false
+      end
+      it '録画ジョブが起動しない' do
+        expect(RecordMovieJob).not_to have_been_enqueued
       end
       it '正常なレスポンスを返す' do
         expect(response).to be_successful

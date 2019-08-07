@@ -8,6 +8,12 @@ class MoviesController < ApplicationController
   MOVIE_EXTENSION = '.mp4'
 
   def new
+    # ライブ終了のwebhook受信時に録画する必要はないのでその場合終了する
+    # ただし、コメントの取得終了のために今後実装を変更する必要はある
+    if params[:movie][:is_live] == 'false'
+      logger.info "screen_id: #{params[:movie][:screen_id]}の放送終了"
+      return
+    end
     user = User.find_by user_id: params[:movie][:user_id]
     if user.nil?
       logger.info "user_id: #{params[:movie][:user_id]}がテーブルに登録されていません"
