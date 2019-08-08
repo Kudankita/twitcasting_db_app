@@ -11,6 +11,7 @@ RSpec.describe 'Movies', type: :request do
       clear_enqueued_jobs
       travel_to Time.zone.local(2004, 11, 24, 11, 44, 44)
       @movie_params = { signature: '09',
+                        event: 'livestart',
                         movie: {
                             id: '189037369',
                             user_id: '182224938',
@@ -67,9 +68,9 @@ RSpec.describe 'Movies', type: :request do
     context '録画終了のPOSTを受信したとき' do
       before do
         @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting_jp', is_recordable: true
-        # is_live(ライブ配信中かどうか)がfalseのボディを作成
+        # event webhook送信の契機をライブ終了を意味するliveendにして試験
         movie_params_live_false = @movie_params
-        movie_params_live_false[:movie][:is_live] = 'false'
+        movie_params_live_false[:event] = 'liveend'
         post movie_path, params: movie_params_live_false
       end
       it '録画ジョブが起動しない' do
