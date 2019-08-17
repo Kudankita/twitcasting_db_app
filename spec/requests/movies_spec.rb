@@ -71,7 +71,7 @@ RSpec.describe 'Movies', type: :request do
         end
 
         it '録画ジョブの引数にURLとファイル名が渡されて起動される' do
-          expect(RecordMovieJob).to have_been_enqueued.with('m3u8', "#{@user_to_record.screen_id}(#{Time.zone.now.to_s :custom}).mp4")
+          expect(RecordMovieJob).to have_been_enqueued.with('m3u8', "#{@user_to_record.screen_id}(#{Time.zone.now.to_s :custom}).mp4", @user_to_record.screen_id)
         end
 
         it 'Movieテーブルに受信したデータが登録される' do
@@ -217,7 +217,7 @@ RSpec.describe 'Movies', type: :request do
         end
 
         it '録画ジョブの引数にURLとscreen_idが変換されたファイル名が渡されて起動される' do
-          expect(RecordMovieJob).to have_been_enqueued.with('m3u8', 'twitcasting_jp(2004年11月24日11時44分44秒).mp4')
+          expect(RecordMovieJob).to have_been_enqueued.with('m3u8', 'twitcasting_jp(2004年11月24日11時44分44秒).mp4', 'twitcasting_jp')
         end
 
         it 'Movieテーブルに受信したデータが登録される' do

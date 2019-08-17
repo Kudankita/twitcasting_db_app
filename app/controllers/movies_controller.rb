@@ -51,7 +51,7 @@ class MoviesController < ApplicationController
     FileUtils.mkdir_p "movies/target/#{fixed_screen_id}" unless Dir.exist? "movies/target/#{fixed_screen_id}"
 
     movie_file_name = "#{fixed_screen_id}(#{Time.zone.now.to_s :custom})#{MOVIE_EXTENSION}"
-    RecordMovieJob.perform_later params[:movie][:hls_url], movie_file_name
+    RecordMovieJob.perform_later params[:movie][:hls_url], movie_file_name, fixed_screen_id
   end
 
   private
