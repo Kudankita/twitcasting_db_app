@@ -54,6 +54,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'fakefs', require: 'fakefs/safe'
   gem 'launchy'
   gem 'selenium-webdriver'
 end

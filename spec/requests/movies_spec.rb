@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'fakefs/spec_helpers'
 
 RSpec.describe 'Movies', type: :request do
   describe 'POST /movies' do
     include ActiveJob::TestHelper
+    include FakeFS::SpecHelpers
     ActiveJob::Base.queue_adapter = :test
     before do
       # 録画動画ファイルのファイル名を特定するために時間を固定
@@ -62,28 +64,48 @@ RSpec.describe 'Movies', type: :request do
     context '録画する必要のあるIDのPOSTを受信したとき' do
       before do
         @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting_jp', is_recordable: true
-        post movie_path, params: @movie_params
+      end
+      context '保存先のディレクトリが存在しないとき' do
+        before do
+          post movie_path, params: @movie_params
+        end
+
+        it '録画ジョブの引数にURLとファイル名が渡されて起動される' do
+          expect(RecordMovieJob).to have_been_enqueued.with('m3u8', "#{@user_to_record.screen_id}(#{Time.zone.now.to_s :custom}).mp4")
+        end
+
+        it 'Movieテーブルに受信したデータが登録される' do
+          expect(Movie.find_by(id: '189037369')).to have_attributes(user_id: '182224938', title: 'ライブ',
+                                                                    subtitle: 'ライブ', last_owner_comment: 'もいもい',
+                                                                    category: 'girls',
+                                                                    link: 'http://twitcasting.tv/twitcasting_jp/movie/189037369',
+                                                                    is_live: true, is_recorded: false,
+                                                                    comment_count: 2124, large_thumbnail: 'http',
+                                                                    small_thumbnail: 'http', country: 'jp',
+                                                                    duration: 1186, created: 1_438_500_282,
+                                                                    is_collabo: false, is_protected: false,
+                                                                    max_view_count: 1675, current_view_count: 20_848,
+                                                                    total_view_count: 20_848, hls_url: 'm3u8')
+        end
+
+        it_behaves_like 'レスポンス'
+
+        it 'ディレクトリが作成されること' do
+          expect(Dir).to exist('movies/target/twitcasting_jp')
+        end
       end
 
-      it '録画ジョブの引数にURLとファイル名が渡されて起動される' do
-        expect(RecordMovieJob).to have_been_enqueued.with('m3u8', "#{@user_to_record.screen_id}(#{Time.zone.now.to_s :custom}).mp4")
-      end
+      context '保存先のディレクトリがすでに存在する場合' do
+        before do
+          # すでにディレクトリが存在する状況をつくる
+          FileUtils.mkdir_p 'movies/target/twitcasting_jp'
+          post movie_path, params: @movie_params
+        end
 
-      it 'Movieテーブルに受信したデータが登録される' do
-        expect(Movie.find_by(id: '189037369')).to have_attributes(user_id: '182224938', title: 'ライブ',
-                                                                  subtitle: 'ライブ', last_owner_comment: 'もいもい',
-                                                                  category: 'girls',
-                                                                  link: 'http://twitcasting.tv/twitcasting_jp/movie/189037369',
-                                                                  is_live: true, is_recorded: false,
-                                                                  comment_count: 2124, large_thumbnail: 'http',
-                                                                  small_thumbnail: 'http', country: 'jp',
-                                                                  duration: 1186, created: 1_438_500_282,
-                                                                  is_collabo: false, is_protected: false,
-                                                                  max_view_count: 1675, current_view_count: 20_848,
-                                                                  total_view_count: 20_848, hls_url: 'm3u8')
+        it 'ディレクトリが存在すること' do
+          expect(Dir).to exist('movies/target/twitcasting_jp')
+        end
       end
-
-      it_behaves_like 'レスポンス'
     end
 
     context '録画終了のPOSTを受信したとき' do
@@ -187,29 +209,49 @@ RSpec.describe 'Movies', type: :request do
     context '録画する必要のあるIDのPOSTを受信し、そのscreen_idに:が含まれていたとき' do
       before do
         @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting:jp', is_recordable: true
-        post movie_path, params: @movie_params
       end
 
-      it '録画ジョブの引数にURLとscreen_idが変換されたファイル名が渡されて起動される' do
-        expect(RecordMovieJob).to have_been_enqueued.with('m3u8', 'twitcasting_jp(2004年11月24日11時44分44秒).mp4')
-      end
+      context '保存先のディレクトリが存在しないとき' do
+        before do
+          post movie_path, params: @movie_params
+        end
 
-      it 'Movieテーブルに受信したデータが登録される' do
-        # screen_idの変換はMovieテーブルには関係しない
-        expect(Movie.find_by(id: '189037369')).to have_attributes(user_id: '182224938', title: 'ライブ',
-                                                                  subtitle: 'ライブ', last_owner_comment: 'もいもい',
-                                                                  category: 'girls',
-                                                                  link: 'http://twitcasting.tv/twitcasting_jp/movie/189037369',
-                                                                  is_live: true, is_recorded: false,
-                                                                  comment_count: 2124, large_thumbnail: 'http',
-                                                                  small_thumbnail: 'http', country: 'jp',
-                                                                  duration: 1186, created: 1_438_500_282,
-                                                                  is_collabo: false, is_protected: false,
-                                                                  max_view_count: 1675, current_view_count: 20_848,
-                                                                  total_view_count: 20_848, hls_url: 'm3u8')
-      end
+        it '録画ジョブの引数にURLとscreen_idが変換されたファイル名が渡されて起動される' do
+          expect(RecordMovieJob).to have_been_enqueued.with('m3u8', 'twitcasting_jp(2004年11月24日11時44分44秒).mp4')
+        end
 
-      it_behaves_like 'レスポンス'
+        it 'Movieテーブルに受信したデータが登録される' do
+          # screen_idの変換はMovieテーブルには関係しない
+          expect(Movie.find_by(id: '189037369')).to have_attributes(user_id: '182224938', title: 'ライブ',
+                                                                    subtitle: 'ライブ', last_owner_comment: 'もいもい',
+                                                                    category: 'girls',
+                                                                    link: 'http://twitcasting.tv/twitcasting_jp/movie/189037369',
+                                                                    is_live: true, is_recorded: false,
+                                                                    comment_count: 2124, large_thumbnail: 'http',
+                                                                    small_thumbnail: 'http', country: 'jp',
+                                                                    duration: 1186, created: 1_438_500_282,
+                                                                    is_collabo: false, is_protected: false,
+                                                                    max_view_count: 1675, current_view_count: 20_848,
+                                                                    total_view_count: 20_848, hls_url: 'm3u8')
+        end
+
+        it '変換後のscreen_idでディレクトリが作成されること' do
+          expect(Dir).to exist('movies/target/twitcasting_jp')
+        end
+
+        it_behaves_like 'レスポンス'
+      end
+      context '保存先のディレクトリがすでに存在する場合' do
+        before do
+          # すでにディレクトリが存在する状況をつくる
+          FileUtils.mkdir_p 'movies/target/twitcasting_jp'
+          post movie_path, params: @movie_params
+        end
+
+        it 'ディレクトリが存在すること' do
+          expect(Dir).to exist('movies/target/twitcasting_jp')
+        end
+      end
     end
   end
 end
