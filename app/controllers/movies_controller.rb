@@ -52,6 +52,8 @@ class MoviesController < ApplicationController
 
     movie_file_name = "#{fixed_screen_id}(#{Time.zone.now.to_s :custom})#{MOVIE_EXTENSION}"
     RecordMovieJob.perform_later params[:movie][:hls_url], movie_file_name, fixed_screen_id
+    GetCommentsJob.perform_later params[:movie][:id], params[:movie][:screen_id],
+                                 "#{fixed_screen_id}(#{Time.zone.now.to_s :custom}).json"
   end
 
   private

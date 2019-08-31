@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_11_041759) do
+ActiveRecord::Schema.define(version: 2019_08_18_082512) do
 
   create_table "developers", force: :cascade do |t|
     t.string "name"
@@ -43,6 +43,11 @@ ActiveRecord::Schema.define(version: 2019_08_11_041759) do
     t.integer "current_view_count"
     t.integer "total_view_count"
     t.string "hls_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "timers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
