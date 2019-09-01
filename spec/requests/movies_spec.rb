@@ -74,6 +74,10 @@ RSpec.describe 'Movies', type: :request do
           expect(RecordMovieJob).to have_been_enqueued.with('m3u8', "#{@user_to_record.screen_id}(#{Time.zone.now.to_s :custom}).mp4", @user_to_record.screen_id)
         end
 
+        it 'コメント取得ジョブの引数にmovie_id、screen_id, ファイル名が渡されて起動される' do
+          expect(GetCommentsJob).to have_been_enqueued.with('189037369', @user_to_record.screen_id, "#{@user_to_record.screen_id}(#{Time.zone.now.to_s :custom}).json")
+        end
+
         it 'Movieテーブルに受信したデータが登録される' do
           expect(Movie.find_by(id: '189037369')).to have_attributes(user_id: '182224938', title: 'ライブ',
                                                                     subtitle: 'ライブ', last_owner_comment: 'もいもい',
@@ -126,6 +130,10 @@ RSpec.describe 'Movies', type: :request do
           expect(RecordMovieJob).not_to have_been_enqueued
         end
 
+        it 'コメント取得ジョブが起動しない' do
+          expect(GetCommentsJob).not_to have_been_enqueued
+        end
+
         it 'Movieテーブルのデータが受信したデータで更新される' do
           expect(Movie.find_by(id: '189037369')).to have_attributes(user_id: '182224938', comment_count: 5000)
         end
@@ -147,6 +155,10 @@ RSpec.describe 'Movies', type: :request do
 
         it '録画ジョブが起動しない' do
           expect(RecordMovieJob).not_to have_been_enqueued
+        end
+
+        it 'コメント取得ジョブが起動しない' do
+          expect(GetCommentsJob).not_to have_been_enqueued
         end
 
         it 'Movieテーブルに受信したデータが登録される' do
@@ -182,6 +194,10 @@ RSpec.describe 'Movies', type: :request do
         expect(RecordMovieJob).not_to have_been_enqueued
       end
 
+      it 'コメント取得ジョブが起動しない' do
+        expect(GetCommentsJob).not_to have_been_enqueued
+      end
+
       it 'Movieテーブルに受信したデータが登録されない' do
         expect(Movie.count).to eq(0)
       end
@@ -197,6 +213,10 @@ RSpec.describe 'Movies', type: :request do
 
       it '録画ジョブが起動しない' do
         expect(RecordMovieJob).not_to have_been_enqueued
+      end
+
+      it 'コメント取得ジョブが起動しない' do
+        expect(GetCommentsJob).not_to have_been_enqueued
       end
 
       it 'Movieテーブルに受信したデータが登録されない' do
@@ -218,6 +238,10 @@ RSpec.describe 'Movies', type: :request do
 
         it '録画ジョブの引数にURLとscreen_idが変換されたファイル名が渡されて起動される' do
           expect(RecordMovieJob).to have_been_enqueued.with('m3u8', 'twitcasting_jp(2004年11月24日11時44分44秒).mp4', 'twitcasting_jp')
+        end
+
+        it 'コメント取得ジョブの引数にscreen_idが変換されて渡される' do
+          expect(GetCommentsJob).to have_been_enqueued.with('189037369', 'twitcasting_jp', 'twitcasting_jp(2004年11月24日11時44分44秒).json')
         end
 
         it 'Movieテーブルに受信したデータが登録される' do
