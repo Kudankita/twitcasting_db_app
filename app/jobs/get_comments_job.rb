@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GetCommentsJob < ApplicationJob
-  queue_as :default2
+  queue_as :default
 
   # 追記中のJSONファイルの配置場所
   TMP_FILE_DIR = 'movies/tmp/'
@@ -17,13 +17,23 @@ class GetCommentsJob < ApplicationJob
       JSON.dump hash, file
     end
 
-    while Movie.find(movie_id).is_live
+    slice_id = nil
+    get_count = 0
+    while Movie.find(movie_id).is_live and get_count < 2000
+      # while文が何回実行されたかをカウントする。liveendのwebhookを受信できず永遠に取得し続けることを防ぐ
+      # 2000だと3時間以上は取得を続行
+      get_count += 1
+
       # timerテーブルを確認し前回のAPI利用が一定秒より前だった場合にAPIを利用
       if !Timer.where('updated_at < ?', Time.current - Constants::API_INTERVAL.second).where(id: TIMER_ID).update(created_at: Time.current).empty?
-        # TODO: あとで消す
-        slice_id = nil
         comments_response = get_comments movie_id, slice_id
-        write_response "#{TMP_FILE_DIR}#{comment_json_name}", comments_response
+        response_hash = JSON.parse(comments_response.body)
+        if comments_response.status_code != 200 or response_hash['comments'].empty?
+          sleep rand(Constants::API_INTERVAL + 1) + Constants::API_INTERVAL
+          next
+        end
+        slice_id = response_hash['comments'][0]['id']
+        write_response "#{TMP_FILE_DIR}#{comment_json_name}", response_hash
       else
         # 一定秒以上待機し、待機時間にランダム性を持たせるために下記のようにする
         sleep rand(Constants::API_INTERVAL + 1) + Constants::API_INTERVAL
@@ -48,13 +58,18 @@ class GetCommentsJob < ApplicationJob
                Authorization: "Bearer #{Rails.application.credentials.dig(:twitcasting, :access_token)}" }
     comments_response = clnt.get(comments_uri, header: header)
     logger.debug comments_response.body
-    comments_response.body
+    comments_response
   end
 
-  def write_response(file_name, response_body)
+  def write_response(file_name, response_hash)
+    response_hash['comments'].each { |comment| comment['comment_time'] = Time.zone.at comment['created'] }
     File.open(file_name) do |io|
-      hash = JSON.load(io)
-      p hash
+      written_hash = JSON.load io
+      written_hash['comments'] = written_hash['comments'] | response_hash['comments']
+      written_hash['comments'].sort_by { |a| a[:id] }
+      File.open(file_name, 'w') do |io2|
+        JSON.dump written_hash, io2
+      end
     end
   end
 end
