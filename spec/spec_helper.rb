@@ -19,7 +19,7 @@ require 'simplecov'
 
 SimpleCov.start 'rails'
 SimpleCov.start do
-  add_filter %w[channels/ mailers/ jobs/]
+  add_filter %w[channels/ mailers/]
 end
 
 RSpec.configure do |config|

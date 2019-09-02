@@ -43,6 +43,7 @@ gem 'jquery-rails'
 
 gem 'sidekiq'
 gem 'streamio-ffmpeg'
+gem 'httpclient'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -54,6 +55,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'fakefs', require: 'fakefs/safe'
   gem 'launchy'
   gem 'selenium-webdriver'
 end

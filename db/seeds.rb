@@ -18,3 +18,5 @@ CSV.foreach('db/users.csv') do |info|
               last_cas: info[5], is_recordable: info[6], is_casting: info[7], comment_count: info[8],
               max_view_count: info[9], current_view_count: info[10], total_view_count: info[11]
 end
+
+Timer.create
