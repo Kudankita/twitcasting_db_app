@@ -39,7 +39,7 @@ class MoviesController < ApplicationController
       logger.info "user_id: #{params[:movie][:user_id]}がテーブルに登録されていません"
       return
     elsif !user.is_recordable
-      logger.info "screen_id: #{params[:movie][:screen_id]}は録画対象ではありません"
+      logger.info "screen_id: #{user.screen_id}は録画対象ではありません"
       return
     end
 
