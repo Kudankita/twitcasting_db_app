@@ -38,4 +38,18 @@ RSpec.describe 'Developers', type: :system do
     # 空欄ではいけない、というエラーメッセージが出ていること
     expect(page).to have_content("Screen can't be blank")
   end
+
+  it 'ツイキャスに存在しないIDを登録しようとして失敗', :vcr do
+    click_link '新規登録'
+    expect do
+      fill_in 'Screen', with: 'not_found'
+      check 'Is compression'
+      fill_in 'Remark', with: 'a'
+      click_button 'Create User'
+    end.to change(User, :count).by(0)
+    # 現状失敗時にusers_pathへ遷移するのでそれを検証する
+    expect(current_path).to eq users_path
+    # Userがみつからない、というエラーメッセージが出ていること
+    expect(page).to have_content('Not Found')
+  end
 end
