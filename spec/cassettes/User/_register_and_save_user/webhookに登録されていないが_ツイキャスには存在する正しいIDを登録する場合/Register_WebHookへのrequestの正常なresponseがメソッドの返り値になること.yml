@@ -1,0 +1,120 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://apiv2.twitcasting.tv/users/twitcasting_jp
+      body:
+        encoding: UTF-8
+        string: ''
+      headers:
+        User-Agent:
+          - HTTPClient/1.0 (2.8.3, ruby 2.5.5 (2019-03-15))
+        Accept:
+          - application/json
+        Date:
+          - Mon, 09 Sep 2019 11:07:32 GMT
+        X-Api-Version:
+          - '2.0'
+        Authorization:
+          - Bearer A
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Mon, 09 Sep 2019 11:07:31 GMT
+        Server:
+          - Apache
+        X-Powered-By:
+          - PHP/5.6.34
+        Expires:
+          - Thu, 19 Nov 1981 08:52:00 GMT
+        Cache-Control:
+          - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+        Pragma:
+          - no-cache
+        X-We-Are-Hiring:
+          - https://about.moi.st/ja/recruit/
+        X-Ratelimit-Limit:
+          - '60'
+        X-Ratelimit-Remaining:
+          - '59'
+        X-Ratelimit-Reset:
+          - '1568027311'
+        Strict-Transport-Security:
+          - max-age=0
+        Content-Length:
+          - '554'
+        Content-Type:
+          - application/json;charset=utf-8
+        Set-Cookie:
+          - PHPSESSID=1
+        Connection:
+          - close
+      body:
+        encoding: UTF-8
+        string: '{"supporter_count":0,"supporting_count":0,"user":{"id":"182224938","screen_id":"twitcasting_jp","name":"ツイキャス公式","image":"http://imagegw02.twitcasting.tv/image3s/pbs.twimg.com/profile_images/921212699559604224/CSEvROHL_bigger.jpg","profile":"ツイキャスの公式アカウントです。ツイキャスに関するお知らせなどを投稿します。お問い合わせは
+        https://t.co/4gCf7XVm7N までお願いします。","level":50,"last_movie_id":"565981658","is_live":false,"supporter_count":0,"supporting_count":0,"created":0}}'
+      http_version:
+    recorded_at: Mon, 09 Sep 2019 11:07:32 GMT
+  - request:
+      method: post
+      uri: https://apiv2.twitcasting.tv/webhooks
+      body:
+        encoding: UTF-8
+        string: '{"user_id":"182224938","events":["livestart","liveend"]}'
+      headers:
+        User-Agent:
+          - HTTPClient/1.0 (2.8.3, ruby 2.5.5 (2019-03-15))
+        Accept:
+          - application/json
+        Date:
+          - Mon, 09 Sep 2019 11:07:33 GMT
+        X-Api-Version:
+          - '2.0'
+        Authorization:
+          - Basic B
+        Content-Type:
+          - application/x-www-form-urlencoded
+    response:
+      status:
+        code: 201
+        message: Created
+      headers:
+        Date:
+          - Mon, 09 Sep 2019 11:07:32 GMT
+        Server:
+          - Apache
+        X-Powered-By:
+          - PHP/5.6.34
+        Expires:
+          - Thu, 19 Nov 1981 08:52:00 GMT
+        Cache-Control:
+          - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+        Pragma:
+          - no-cache
+        X-We-Are-Hiring:
+          - https://about.moi.st/ja/recruit/
+        X-Ratelimit-Limit:
+          - '60'
+        X-Ratelimit-Remaining:
+          - '59'
+        X-Ratelimit-Reset:
+          - '1568027312'
+        Strict-Transport-Security:
+          - max-age=0
+        Content-Length:
+          - '62'
+        Content-Type:
+          - application/json;charset=utf-8
+        Set-Cookie:
+          - PHPSESSID=2
+        Connection:
+          - close
+      body:
+        encoding: UTF-8
+        string: '{"user_id":"182224938","added_events":["livestart","liveend"]}'
+      http_version:
+    recorded_at: Mon, 09 Sep 2019 11:07:33 GMT
+recorded_with: VCR 5.0.0

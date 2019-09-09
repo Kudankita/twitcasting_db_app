@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Developers', type: :system do
   before do
+    FactoryBot.create(:timer)
     # まずログインする
     FactoryBot.create(:developer)
     visit login_path
@@ -11,7 +12,7 @@ RSpec.describe 'Developers', type: :system do
     fill_in 'Password', with: 'a' * 6
     click_button 'Log in'
   end
-  it '正常に新しいUserを登録して一覧ページへ遷移する' do
+  it '正常に新しいUserを登録して一覧ページへ遷移する', :vcr do
     click_link '新規登録'
     # 登録に成功してデータが一つ増えていること
     expect do

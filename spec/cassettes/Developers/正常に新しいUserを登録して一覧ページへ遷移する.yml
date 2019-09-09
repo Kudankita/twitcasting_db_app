@@ -1,0 +1,122 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://apiv2.twitcasting.tv/users/a
+      body:
+        encoding: UTF-8
+        string: ''
+      headers:
+        User-Agent:
+          - HTTPClient/1.0 (2.8.3, ruby 2.5.5 (2019-03-15))
+        Accept:
+          - application/json
+        Date:
+          - Sun, 08 Sep 2019 13:13:40 GMT
+        X-Api-Version:
+          - '2.0'
+        Authorization:
+          - Bearer A
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Sun, 08 Sep 2019 13:13:40 GMT
+        Server:
+          - Apache
+        X-Powered-By:
+          - PHP/5.6.34
+        Expires:
+          - Thu, 19 Nov 1981 08:52:00 GMT
+        Cache-Control:
+          - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+        Pragma:
+          - no-cache
+        X-We-Are-Hiring:
+          - https://about.moi.st/ja/recruit/
+        X-Ratelimit-Limit:
+          - '60'
+        X-Ratelimit-Remaining:
+          - '59'
+        X-Ratelimit-Reset:
+          - '1567948480'
+        Strict-Transport-Security:
+          - max-age=0
+        Content-Length:
+          - '416'
+        Content-Type:
+          - application/json;charset=utf-8
+        Set-Cookie:
+          - PHPSESSID=1
+        Connection:
+          - close
+      body:
+        encoding: UTF-8
+        string: '{"supporter_count":2,"supporting_count":0,"user":{"id":"940631","screen_id":"a","name":"Andrei
+        Zmievski","image":"http://twitcasting.tv/img/twitter_bigger_6.png","profile":"Founding
+        member of Analog, a web design & development co-operative. Photographer, coder,
+        beer lover and brewer, Russian, and San Franciscan.","level":1,"last_movie_id":null,"is_live":false,"supporter_count":0,"supporting_count":0,"created":0}}'
+      http_version:
+    recorded_at: Sun, 08 Sep 2019 13:13:40 GMT
+  - request:
+      method: post
+      uri: https://apiv2.twitcasting.tv/webhooks
+      body:
+        encoding: UTF-8
+        string: '{"user_id":"940631","events":["livestart","liveend"]}'
+      headers:
+        User-Agent:
+          - HTTPClient/1.0 (2.8.3, ruby 2.5.5 (2019-03-15))
+        Accept:
+          - application/json
+        Date:
+          - Sun, 08 Sep 2019 13:13:42 GMT
+        X-Api-Version:
+          - '2.0'
+        Authorization:
+          - Basic A
+        Content-Type:
+          - application/x-www-form-urlencoded
+    response:
+      status:
+        code: 201
+        message: OK
+      headers:
+        Date:
+          - Sun, 08 Sep 2019 13:13:42 GMT
+        Server:
+          - Apache
+        X-Powered-By:
+          - PHP/5.6.34
+        Expires:
+          - Thu, 19 Nov 1981 08:52:00 GMT
+        Cache-Control:
+          - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+        Pragma:
+          - no-cache
+        X-We-Are-Hiring:
+          - https://about.moi.st/ja/recruit/
+        X-Ratelimit-Limit:
+          - '60'
+        X-Ratelimit-Remaining:
+          - '59'
+        X-Ratelimit-Reset:
+          - '1567948482'
+        Strict-Transport-Security:
+          - max-age=0
+        Content-Length:
+          - '38'
+        Content-Type:
+          - application/json;charset=utf-8
+        Set-Cookie:
+          - PHPSESSID=2
+        Connection:
+          - close
+      body:
+        encoding: UTF-8
+        string: '{"user_id":"940631","added_events":["livestart", "liveend"]}'
+      http_version:
+    recorded_at: Sun, 08 Sep 2019 13:13:42 GMT
+recorded_with: VCR 5.0.0
