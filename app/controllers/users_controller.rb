@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user].permit(:screen_id, :is_compression, :remark))
     if @user.valid? and [200, 201].include?(@user.register_and_save_user.status_code) and @user.save
+      flash[:info] = 'ユーザーの新規登録に完了しました。'
       redirect_to users_path
     else
       render 'new'

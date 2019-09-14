@@ -1,19 +1,29 @@
-<%= form_for @user do |f| %>
-  <%= render 'shared/user_error_messages' %>
-  <p>
-    <%= f.label :screen_id %>
-    <%= f.text_field :screen_id %>
-  </p>
-
-  <p>
-    <%= f.label :is_compression %>
-    <%= f.check_box :is_compression %>
-  </p>
-
-  <p>
-    <%= f.label :remark %>
-    <%= f.text_area :remark %>
-  </p>
-
-  <%= f.submit %>
-<% end %>
+<div class="row mt-5">
+  <div class="col-md-6 mx-auto card">
+    <div class="card-body">
+      <%= render 'shared/user_error_messages' %>
+      <h5 class="card-title">ユーザー新規登録</h5>
+      <p class="card-text">新たにユーザーを登録します。</p>
+      <ul>
+        <li>ユーザーの情報をテーブルに登録します。</li>
+        <li>放送開始時にWebHookを受信するようになります。</li>
+        <li>Webhook受信時に録画するようになります。</li>
+      </ul>
+      <%= form_for @user do |f| %>
+        <div class="form-group">
+          <%= f.label :screen_id, 'ID' %><span>*</span>
+          <%= f.text_field :screen_id, class: 'form-control', required: true %>
+        </div>
+        <div class="form-group form-check">
+          <%= f.check_box :is_compression, class: 'form-check-input' %>
+          <%= f.label :is_compression, '圧縮する' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :remark, '備考' %>
+          <%= f.text_area :remark, class: 'form-control' %>
+        </div>
+        <%= f.submit '登録', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>
