@@ -58,6 +58,8 @@ group :test do
   gem 'fakefs', require: 'fakefs/safe'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 group :development do

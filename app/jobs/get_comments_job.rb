@@ -7,9 +7,6 @@ class GetCommentsJob < ApplicationJob
   TMP_FILE_DIR = 'movies/tmp/'
   # 完成したJSONファイルの配置場所
   SAVED_FILE_DIR = 'movies/target/'
-  # TIMERテーブルのうちAPIに関する行を参照させるための指定
-  # 基本的に1固定だが、今後増えたときに備える
-  TIMER_ID = 1
 
   def perform(movie_id, screen_id, comment_json_name)
     File.open("#{TMP_FILE_DIR}#{comment_json_name}", 'w') do |file|
@@ -25,7 +22,7 @@ class GetCommentsJob < ApplicationJob
       get_count += 1
 
       # timerテーブルを確認し前回のAPI利用が一定秒より前だった場合にAPIを利用
-      if !Timer.where('updated_at < ?', Time.current - Constants::API_INTERVAL.second).where(id: TIMER_ID).update(created_at: Time.current).empty?
+      if !Timer.where('updated_at < ?', Time.current - Constants::API_INTERVAL.second).where(id: Constants::TIMER_ID).update(created_at: Time.current).empty?
         comments_response = get_comments movie_id, slice_id
         response_hash = JSON.parse(comments_response.body)
         if comments_response.status_code != 200 or response_hash['comments'].empty?
