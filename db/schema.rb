@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_18_082512) do
+ActiveRecord::Schema.define(version: 2019_09_15_114532) do
 
   create_table "developers", force: :cascade do |t|
     t.string "name"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2019_08_18_082512) do
     t.string "screen_id"
     t.string "name"
     t.string "last_cas"
-    t.boolean "is_recordable"
+    t.boolean "is_recordable", default: true
     t.boolean "is_casting"
     t.integer "comment_count"
     t.integer "max_view_count"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2019_08_18_082512) do
     t.integer "total_view_count"
     t.text "remark"
     t.boolean "is_compression", default: false
-    t.boolean "is_deleted"
+    t.boolean "is_deleted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
