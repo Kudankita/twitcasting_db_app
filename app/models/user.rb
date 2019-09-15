@@ -16,7 +16,7 @@ class User < ApplicationRecord
       return user_info_response
     end
     user_info_hash = JSON.parse user_info_response.body
-    user_id = user_info_hash['user']['id']
+    self.attributes = { user_id: user_info_hash['user']['id'], name: user_info_hash['user']['name'] }
     wait_api REGISTER_WEBHOOK_WAIT
     register_webhook_response = register_webhook user_id
     logger.debug register_webhook_response.body
