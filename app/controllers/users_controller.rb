@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @users = User.all
+    @users = User.select('screen_id, name, last_cas, is_recordable, is_casting').all.order('screen_id')
   end
 
   def new
