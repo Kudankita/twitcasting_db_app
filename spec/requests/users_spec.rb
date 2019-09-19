@@ -27,11 +27,11 @@ RSpec.describe 'Users', type: :request do
   describe 'GET /users/new' do
     context 'ログインしていないとき' do
       it 'ログインページへリダイレクトする' do
-        get users_new_path
+        get new_user_path
         expect(response).to redirect_to login_path
       end
       it 'リダイレクト後エラーメッセージが表示される' do
-        get users_new_path
+        get new_user_path
         expect(flash[:notice]).to eq 'ログインが必要です'
       end
     end

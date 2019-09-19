@@ -41,9 +41,9 @@
     <%= content_tag(:div, message, class: "alert alert-#{message_type} col-md-8 mx-auto mt-2") %>
   <% end %>
 </div>
-<div class="container">
+<main class="container">
   <%= yield %>
-</div>
+</main>
 <%= debug(params) if Rails.env.development? %>
 <%= debug(session[:developer_id]) if Rails.env.development? %>
 </body>

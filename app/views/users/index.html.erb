@@ -18,7 +18,7 @@
   <% @users.each do |user| %>
     <tr>
       <td><%= user.screen_id %></td>
-      <td><%= link_to user.name, '#' %></td>
+      <td><%= link_to user.name, user %></td>
       <td><%= user.last_cas %></td>
       <td><%= render 'shared/boolean_converter', arg: user.is_recordable %></td>
       <td><%= render 'shared/boolean_converter', arg: user.is_casting %></td>

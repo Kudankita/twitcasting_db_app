@@ -22,7 +22,7 @@ RSpec.describe 'Developers', type: :system do
       expect(current_path).to eq login_path
       expect(page).to have_content 'ログインが必要です'
       # User新規作成ページも同様
-      visit users_new_path
+      visit new_user_path
       expect(current_path).to eq login_path
       expect(page).to have_content 'ログインが必要です'
     end

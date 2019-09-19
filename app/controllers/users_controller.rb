@@ -4,7 +4,11 @@ class UsersController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @users = User.select('screen_id, name, last_cas, is_recordable, is_casting').all.order('screen_id')
+    @users = User.select('id, screen_id, name, last_cas, is_recordable, is_casting').all.order('screen_id')
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 
   def new
@@ -19,5 +23,15 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def edit
+    logger.debug 'delete'
+    redirect_to users_path
+  end
+
+  def destroy
+    logger.debug 'delete'
+    redirect_to users_path
   end
 end
