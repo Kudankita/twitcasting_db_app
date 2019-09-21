@@ -63,7 +63,7 @@ RSpec.describe 'Movies', type: :request do
 
     context '録画する必要のあるIDのPOSTを受信したとき' do
       before do
-        @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting_jp', is_recordable: true
+        @user_to_record = FactoryBot.create(:user)
       end
       context '保存先のディレクトリが存在しないとき' do
         before do
@@ -115,7 +115,7 @@ RSpec.describe 'Movies', type: :request do
     context '録画終了のPOSTを受信したとき' do
       context '録画開始時にMovieの情報を保存していた場合' do
         before do
-          @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting_jp', is_recordable: true
+          @user_to_record = FactoryBot.create(:user)
           # livestart受信時にデータを保存したイメージ
           Movie.create id: '189037369', user_id: '182224938', comment_count: 2124
           # event webhook送信の契機をライブ終了を意味するliveendにして試験
@@ -146,7 +146,7 @@ RSpec.describe 'Movies', type: :request do
       end
       context '録画開始時はアプリが正常動作しておらずMovieの情報が保存されていなかった場合' do
         before do
-          @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting_jp', is_recordable: true
+          @user_to_record = FactoryBot.create(:user)
           # event webhook送信の契機をライブ終了を意味するliveendにして試験
           movie_params_live_false = @movie_params
           movie_params_live_false[:event] = 'liveend'
@@ -185,8 +185,7 @@ RSpec.describe 'Movies', type: :request do
 
     context '録画はしないIDのPOSTを正常に受信したとき' do
       before do
-        # is_recordableがfalseなレコードを登録
-        @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting_jp', is_recordable: false
+        @user_to_record = FactoryBot.create(:record_false_user)
         post movie_path, params: @movie_params
       end
 
@@ -228,7 +227,7 @@ RSpec.describe 'Movies', type: :request do
 
     context '録画する必要のあるIDのPOSTを受信し、そのscreen_idに:が含まれていたとき' do
       before do
-        @user_to_record = User.create user_id: '182224938', screen_id: 'twitcasting:jp', is_recordable: true
+        @user_to_record = FactoryBot.create(:user)
       end
 
       context '保存先のディレクトリが存在しないとき' do
