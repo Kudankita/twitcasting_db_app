@@ -1,0 +1,60 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://apiv2.twitcasting.tv/users/
+      body:
+        encoding: UTF-8
+        string: ''
+      headers:
+        User-Agent:
+          - HTTPClient/1.0 (2.8.3, ruby 2.5.5 (2019-03-15))
+        Accept:
+          - application/json
+        Date:
+          - Sat, 21 Sep 2019 13:02:15 GMT
+        X-Api-Version:
+          - '2.0'
+        Authorization:
+          - Bearer A
+    response:
+      status:
+        code: 404
+        message: Not Found
+      headers:
+        Date:
+          - Sat, 21 Sep 2019 13:02:15 GMT
+        Server:
+          - Apache
+        X-Powered-By:
+          - PHP/5.6.34
+        Expires:
+          - Thu, 19 Nov 1981 08:52:00 GMT
+        Cache-Control:
+          - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+        Pragma:
+          - no-cache
+        X-We-Are-Hiring:
+          - https://about.moi.st/ja/recruit/
+        X-Ratelimit-Limit:
+          - '60'
+        X-Ratelimit-Remaining:
+          - '59'
+        X-Ratelimit-Reset:
+          - '1569070995'
+        Strict-Transport-Security:
+          - max-age=0
+        Content-Length:
+          - '44'
+        Content-Type:
+          - application/json;charset=utf-8
+        Set-Cookie:
+          - PHPSESSID=A
+        Connection:
+          - close
+      body:
+        encoding: UTF-8
+        string: '{"error":{"code":404,"message":"Not Found"}}'
+      http_version:
+    recorded_at: Sat, 21 Sep 2019 13:02:15 GMT
+recorded_with: VCR 5.0.0

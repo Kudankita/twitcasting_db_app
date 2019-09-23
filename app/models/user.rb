@@ -81,6 +81,8 @@ class User < ApplicationRecord
     http_client.delete(remove_webhook_uri, header: SET_WEBHOOK_HEADERS)
   end
 
+  private
+
   def set_api_errormessage(api_response)
     response_hash = JSON.parse api_response.body
     if screen_id.blank?
@@ -89,8 +91,6 @@ class User < ApplicationRecord
       errors.add(screen_id, response_hash['error']['message'])
     end
   end
-
-  private
 
   def build_http_client
     http_client = HTTPClient.new
