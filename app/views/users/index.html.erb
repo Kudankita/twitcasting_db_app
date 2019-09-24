@@ -1,40 +1,27 @@
-<%= link_to '新規登録', 'users/new', method: "get" %>
-<table class="table table-bordered">
+<%= link_to '新規登録', 'users/new' %>
+<table class="table table-bordered mt-2">
   <thead>
   <tr>
-    <th>user_id</th>
-    <th>screen_id</th>
-    <th>name</th>
-    <th>created_at</th>
-    <th>updated_at</th>
-    <th>last_cas</th>
-    <th>is_recordable</th>
-    <th>is_casting</th>
-    <th>comment_count</th>
-    <th>max_view_count</th>
-    <th>current_view_count</th>
-    <th>total_view_count</th>
-    <th>is_compression</th>
-    <th>remark</th>
+    <!--screen_id-->
+    <th>ID</th>
+    <!--name-->
+    <th>ユーザID</th>
+    <!--last_cas-->
+    <th>最後の放送日時</th>
+    <!--is_casting-->
+    <th>録画</th>
+    <!--is_casting-->
+    <th>放送中</th>
   </tr>
   </thead>
   <tbody>
   <% @users.each do |user| %>
     <tr>
-      <td><%= user.user_id %></td>
       <td><%= user.screen_id %></td>
-      <td><%= user.name %></td>
-      <td><%= user.created_at %></td>
-      <td><%= user.updated_at %></td>
+      <td><%= link_to user.name, user %></td>
       <td><%= user.last_cas %></td>
-      <td><%= user.is_recordable %></td>
-      <td><%= user.is_casting %></td>
-      <td><%= user.comment_count %></td>
-      <td><%= user.max_view_count %></td>
-      <td><%= user.current_view_count %></td>
-      <td><%= user.total_view_count %></td>
-      <td><%= user.is_compression %></td>
-      <td><%= user.remark %></td>
+      <td><%= render 'shared/boolean_converter', arg: user.is_recordable %></td>
+      <td><%= render 'shared/boolean_converter', arg: user.is_casting %></td>
     </tr>
   <% end %>
   </tbody>

@@ -1,0 +1,40 @@
+<div class="row mt-5">
+  <div class="col-md-6 mx-auto card">
+    <div class="card-body">
+      <%= render 'shared/user_error_messages' %>
+      <h5 class="card-title">ユーザー情報更新</h5>
+      <p class="card-text">すでに登録されているユーザーの情報を更新します。</p>
+      <%= form_for @user do |f| %>
+        <div class="form-group">
+          <%= f.label :user_id, 'ユーザーID' %><span>*</span>
+          <%= f.text_field :user_id, class: 'form-control', required: true %>
+        </div>
+        <div class="form-group">
+          <%= f.label :screen_id, 'スクリーンID' %><span>*</span>
+          <%= f.text_field :screen_id, class: 'form-control', required: true %>
+        </div>
+        <div class="form-group">
+          <%= f.label :name, 'ユーザー名' %><span>*</span>
+          <%= f.text_field :name, class: 'form-control', required: true %>
+        </div>
+        <div class="form-group form-check">
+          <%= f.check_box :is_recordable, class: 'form-check-input' %>
+          <%= f.label :is_recordable, '録画する' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :remark, '備考' %>
+          <%= f.text_area :remark, class: 'form-control' %>
+        </div>
+        <div class="form-group form-check">
+          <%= f.check_box :is_compression, class: 'form-check-input' %>
+          <%= f.label :is_compression, '圧縮する' %>
+        </div>
+        <div class="form-group form-check">
+          <%= f.check_box :is_deleted, class: 'form-check-input' %>
+          <%= f.label :is_deleted, '削除フラグ' %>
+        </div>
+        <%= f.submit '登録', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

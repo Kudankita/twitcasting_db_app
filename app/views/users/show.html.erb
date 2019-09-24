@@ -1,0 +1,72 @@
+<div class="col-md-8 mx-auto">
+  <div class="mt-2">
+    <div class="d-inline">
+      <%= link_to '編集', edit_user_path %>
+    </div>
+    <div class="d-inline">
+      <%= link_to '削除', @user, method: :delete %>
+    </div>
+  </div>
+  <table class="table table-bordered mt-2">
+    <tr>
+      <th>ユーザーID</th>
+      <td><%= @user.user_id %></td>
+    </tr>
+    <tr>
+      <th>スクリーンID</th>
+      <td><%= @user.screen_id %></td>
+    </tr>
+    <tr>
+      <th>名前</th>
+      <td><%= @user.name %></td>
+    </tr>
+    <tr>
+      <th>最後の放送日時</th>
+      <td><%= @user.last_cas %></td>
+    </tr>
+    <tr>
+      <th>録画</th>
+      <td><%= render 'shared/boolean_converter', arg: @user.is_recordable %></td>
+    </tr>
+    <tr>
+      <th>放送中</th>
+      <td><%= render 'shared/boolean_converter', arg: @user.is_casting %></td>
+    </tr>
+    <tr>
+      <th>最後の放送のコメント数</th>
+      <td><%= @user.comment_count %></td>
+    </tr>
+    <tr>
+      <th>最後の放送の最大視聴者数</th>
+      <td><%= @user.max_view_count %></td>
+    </tr>
+    <tr>
+      <th>最後の放送の最後の視聴者数(配信中ではない場合0)</th>
+      <td><%= @user.current_view_count %></td>
+    </tr>
+    <tr>
+      <th>最後の放送の総視聴者数</th>
+      <td><%= @user.total_view_count %></td>
+    </tr>
+    <tr>
+      <th>備考</th>
+      <td><%= @user.remark %></td>
+    </tr>
+    <tr>
+      <th>圧縮</th>
+      <td><%= render 'shared/boolean_converter', arg: @user.is_compression %></td>
+    </tr>
+    <tr>
+      <th>削除フラグ</th>
+      <td><%= render 'shared/boolean_converter', arg: @user.is_deleted %></td>
+    </tr>
+    <tr>
+      <th>作成日時</th>
+      <td><%= @user.created_at %></td>
+    </tr>
+    <tr>
+      <th>更新日時</th>
+      <td><%= @user.updated_at %></td>
+    </tr>
+  </table>
+</div>

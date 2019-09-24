@@ -14,4 +14,7 @@ module Constants
   # TIMERテーブルのうちAPIに関する行を参照させるための指定
   # 基本的に1固定だが、今後増えたときに備える
   TIMER_ID = 1
+
+  # WebHook新規登録利用成功時のレスポンス
+  REGISTER_WEBHOOK_OK_RESPONSE = [200, 201].freeze
 end
