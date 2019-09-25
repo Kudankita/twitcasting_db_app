@@ -1,0 +1,42 @@
+@startuml movie_job
+start
+note right: MoviesController#new
+:POSTリクエストを受信;
+if (eventがliveendか) then (yes)
+    :userテーブルのis_catingをfalseに更新（同時にuserの他のカラムも更新）;
+    :Movieテーブルの情報を更新;
+    note right: 同じ放送についての\nlivestartとliveendは\n同じidなのでそれで検索、\nUpdateする
+else (no)
+    if (user_idはテーブルに登録されているか) then (yes)
+        if (そのuser_idは録画対象か（is_recordableがtrueか）) then (yes)
+            :動画ファイル名を決定;
+            :作成後の動画ファイル、コメントファイルを格納するディレクトリの作成;
+            :webhookで受信した情報をテーブルに登録;
+            fork
+                partition record_movie_job.rb {
+                    :ffmegを使って録画;
+                    :録画完了した動画のディレクトリを移動;
+                }
+            fork again
+                partition get_comments_job.rb {
+                    :空JSONを作成;
+                    while (コメント取得対象ユーザーのis_casting) is (true)
+                        if (timerテーブルの前回API利用日時が一定秒以上前) then (yes)
+                            :ツイキャスAPIを利用してコメントを取得;
+                            :取得したコメントをファイルに追記;
+                        else (no)
+                            :ランダムな秒数待機する;
+                        endif
+                        :ランダム秒待機;
+                    endwhile (false)
+                    :コメント記入完了したファイルのディレクトリを移動;
+                }
+            end fork
+        else (no)
+        endif
+    else (no)
+    endif
+endif
+
+stop
+@endumlc
