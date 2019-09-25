@@ -1,0 +1,22 @@
+@startuml register_user
+start
+:画面上でボタンが押されてPOSTリクエストが送信;
+if(userインスタンスがvalidか) then (yes)
+partition user.rb {
+    :Get User InfoのAPIでuser_idを取得する;
+    :user_idを利用してwebhookに登録する;
+    :userインスタンスをテーブルに保存する;
+}
+    if(ここまででエラーが発生したかどうか)then(no)
+        :user一覧画面に戻る;
+    else(yes)
+        :画面にエラーメッセージを表示;
+        :render 'new'して元の画面に戻る;
+    endif
+else(no)
+    :画面上に登録内容に関するエラーメッセージを表示;
+    :render 'new'して元の画面に戻る;
+endif
+
+stop
+@enduml
