@@ -9,7 +9,7 @@ class MoviesController < ApplicationController
 
   def new
     user = User.find_by user_id: params[:movie][:user_id]
-    user&.update(last_cas: Time.zone.at(movie_params[:created].to_i), is_casting: movie_params[:is_live],
+    user&.update(last_cas: Time.zone.at(movie_params[:created].to_i).to_s(:datetime), is_casting: movie_params[:is_live],
                  comment_count: movie_params[:comment_count], max_view_count: movie_params[:max_view_count],
                  current_view_count: movie_params[:current_view_count],
                  total_view_count: movie_params[:total_view_count])

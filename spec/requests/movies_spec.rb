@@ -80,7 +80,7 @@ RSpec.describe 'Movies', type: :request do
           end
 
           it 'Userテーブルのデータが受信したデータで更新される' do
-            expect(User.find_by(id: user_to_record.id)).to have_attributes(last_cas: Time.zone.at(movie_params[:movie][:created].to_i), is_casting: movie_params[:movie][:is_live],
+            expect(User.find_by(id: user_to_record.id)).to have_attributes(last_cas: Time.zone.at(movie_params[:movie][:created].to_i).to_s(:datetime), is_casting: movie_params[:movie][:is_live],
                                                                            comment_count: movie_params[:movie][:comment_count], max_view_count: movie_params[:movie][:max_view_count],
                                                                            current_view_count: movie_params[:movie][:current_view_count],
                                                                            total_view_count: movie_params[:movie][:total_view_count])
@@ -145,7 +145,7 @@ RSpec.describe 'Movies', type: :request do
           end
 
           it 'Userテーブルのデータが受信したデータで更新される' do
-            expect(User.find_by(id: user_to_record.id)).to have_attributes(last_cas: Time.zone.at(movie_params[:movie][:created].to_i), is_casting: false,
+            expect(User.find_by(id: user_to_record.id)).to have_attributes(last_cas: Time.zone.at(movie_params[:movie][:created].to_i).to_s(:datetime), is_casting: false,
                                                                            comment_count: comments_at_liveend, max_view_count: movie_params[:movie][:max_view_count],
                                                                            current_view_count: movie_params[:movie][:current_view_count],
                                                                            total_view_count: movie_params[:movie][:total_view_count])
