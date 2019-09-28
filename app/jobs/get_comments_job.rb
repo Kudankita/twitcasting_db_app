@@ -9,6 +9,7 @@ class GetCommentsJob < ApplicationJob
   SAVED_FILE_DIR = 'movies/target/'
 
   def perform(movie_id, screen_id, comment_json_name)
+    logger.info "#{screen_id}のコメント取得開始"
     File.open("#{TMP_FILE_DIR}#{comment_json_name}", 'w') do |file|
       hash = { comments: [] }
       JSON.dump hash, file
@@ -20,10 +21,12 @@ class GetCommentsJob < ApplicationJob
       # while文が何回実行されたかをカウントする。liveendのwebhookを受信できず永遠に取得し続けることを防ぐ
       # 2000だと3時間以上は取得を続行
       get_count += 1
+      logger.debug "#{screen_id}のコメント取得　#{get_count}回目の実行"
 
       # timerテーブルを確認し前回のAPI利用が一定秒より前だった場合にAPIを利用
       if !Timer.where('updated_at < ?', Time.current - Constants::API_INTERVAL.second).where(id: Constants::TIMER_ID).update(created_at: Time.current).empty?
         comments_response = get_comments movie_id, slice_id
+        logger.debug comments_response.body
         response_hash = JSON.parse(comments_response.body)
         if comments_response.status_code != 200 or response_hash['comments'].empty?
           sleep rand(Constants::API_INTERVAL + 1) + Constants::API_INTERVAL
@@ -41,6 +44,7 @@ class GetCommentsJob < ApplicationJob
     end
 
     File.rename "#{TMP_FILE_DIR}#{comment_json_name}", "movies/target/#{screen_id}/#{comment_json_name}"
+    logger.info "#{screen_id}のコメント取得終了"
   end
 
   private
@@ -50,10 +54,10 @@ class GetCommentsJob < ApplicationJob
     comments_uri.query = { limit: 50, slice_id: slice_id }.to_param
     # 最終的にhttps://apiv2.twitcasting.tv/movies/564514963/comments?limit=50&slice_id=16733943101のようなURLになる
 
-    clnt = HTTPClient.new
+    http_client = HTTPClient.new
     header = { Accept: 'application/json', 'X-Api-Version': '2.0',
                Authorization: "Bearer #{Rails.application.credentials.dig(:twitcasting, :access_token)}" }
-    comments_response = clnt.get(comments_uri, header: header)
+    comments_response = http_client.get(comments_uri, header: header)
     logger.debug comments_response.body
     comments_response
   end
