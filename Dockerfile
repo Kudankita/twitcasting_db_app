@@ -11,10 +11,10 @@ COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
 COPY . /myapp
-RUN bundle exec rake assets:precompile RAILS_ENV=production && \
-    bundle exec rake db:schema:load RAILS_ENV=production && \
-    bundle exec rake db:schema:load RAILS_ENV=test && \
-    bundle exec rails db:seed RAILS_ENV=production
+RUN bundle exec rake assets:precompile RAILS_ENV=production \
+    && bundle exec rake db:schema:load RAILS_ENV=production \
+    && bundle exec rake db:schema:load RAILS_ENV=test \
+    && bundle exec rails db:seed RAILS_ENV=production
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
