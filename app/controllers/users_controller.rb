@@ -18,8 +18,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user].permit(:screen_id, :is_compression, :remark))
     if Constants::REGISTER_WEBHOOK_OK_RESPONSE.include?(@user.register_and_save_user.status_code) and @user.save
-      flash[:info] = 'ユーザーの新規登録に完了しました。'
-      redirect_to users_path
+      redirect_to users_path, flash: { info: 'ユーザーの新規登録に完了しました。' }
     else
       render 'new'
     end
@@ -41,17 +40,21 @@ class UsersController < ApplicationController
       return
     end
     if @user.save
-      # 更新に成功したときの処理
-      flash[:info] = 'ユーザー情報の更新を完了しました。'
-      redirect_to users_path
+      redirect_to users_path, flash: { info: 'ユーザー情報の更新を完了しました。' }
     else
       render 'edit'
     end
   end
 
   def destroy
-    logger.debug 'delete'
-    redirect_to users_path
+    @user = User.find(params[:id])
+    @user.update_webhook_status false
+    unless @user.errors.empty?
+      render 'edit'
+      return
+    end
+    @user.destroy
+    redirect_to users_path, flash: { info: 'ユーザー情報の削除を完了しました。' }
   end
 
   private

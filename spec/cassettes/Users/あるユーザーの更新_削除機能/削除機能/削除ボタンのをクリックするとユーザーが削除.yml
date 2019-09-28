@@ -1,0 +1,60 @@
+---
+http_interactions:
+  - request:
+      method: delete
+      uri: https://apiv2.twitcasting.tv/webhooks?events%5B%5D=liveend&events%5B%5D=livestart&user_id=182224938
+      body:
+        encoding: UTF-8
+        string: ''
+      headers:
+        User-Agent:
+          - HTTPClient/1.0 (2.8.3, ruby 2.5.5 (2019-03-15))
+        Accept:
+          - application/json
+        Date:
+          - Sat, 28 Sep 2019 11:22:56 GMT
+        X-Api-Version:
+          - '2.0'
+        Authorization:
+          - Basic A
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Sat, 28 Sep 2019 11:22:56 GMT
+        Server:
+          - Apache
+        X-Powered-By:
+          - PHP/5.6.34
+        Expires:
+          - Thu, 19 Nov 1981 08:52:00 GMT
+        Cache-Control:
+          - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+        Pragma:
+          - no-cache
+        X-We-Are-Hiring:
+          - https://about.moi.st/ja/recruit/
+        X-Ratelimit-Limit:
+          - '60'
+        X-Ratelimit-Remaining:
+          - '58'
+        X-Ratelimit-Reset:
+          - '1569669803'
+        Strict-Transport-Security:
+          - max-age=0
+        Content-Length:
+          - '64'
+        Content-Type:
+          - application/json;charset=utf-8
+        Set-Cookie:
+          - PHPSESSID=A
+        Connection:
+          - close
+      body:
+        encoding: UTF-8
+        string: '{"user_id":"182224938","deleted_events":["livestart","liveend"]}'
+      http_version:
+    recorded_at: Sat, 28 Sep 2019 11:22:56 GMT
+recorded_with: VCR 5.0.0
