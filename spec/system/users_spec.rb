@@ -78,10 +78,10 @@ RSpec.describe 'Users', type: :system do
   end
 
   context 'あるユーザーの更新、削除機能' do
-    let(:not_found_user) { FactoryBot.create(:not_found_user, name: 'not_found', is_recordable: false) }
-    let(:changed_name) { '変更後の名前' }
-    let(:changed_remark) { '備考入力' }
     context '更新機能' do
+      let(:not_found_user) { FactoryBot.create(:not_found_user, name: 'not_found', is_recordable: false) }
+      let(:changed_name) { '変更後の名前' }
+      let(:changed_remark) { '備考入力' }
       it 'ユーザーの情報を更新' do
         visit edit_user_path user
         fill_in 'ユーザー名', with: changed_name
@@ -99,6 +99,18 @@ RSpec.describe 'Users', type: :system do
         click_button '登録'
         expect(not_found_user.reload.is_recordable).to be_falsey
         expect(page).to have_content('Bad Request')
+      end
+    end
+
+    context '削除機能' do
+      it '削除ボタンのをクリックするとユーザーが削除', vcr: vcr_options do
+        visit user_path user
+        expect do
+          click_link '削除'
+        end.to change(User, :count).by(-1)
+        expect(current_path).to eq users_path
+        expect(page).to have_content('ユーザー情報の削除を完了しました。')
+        expect(page).not_to have_content('twitcasting_jp')
       end
     end
   end
