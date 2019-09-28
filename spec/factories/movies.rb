@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :movie do
-    id { 538_624_754 }
-    user_id { 'MyString' }
+    id { 189_037_369 }
+    user_id { '182224938' }
     title { 'MyString' }
     subtitle { 'MyString' }
     last_owner_comment { 'MyString' }

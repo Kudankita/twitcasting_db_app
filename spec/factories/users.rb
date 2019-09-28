@@ -22,6 +22,10 @@ FactoryBot.define do
     factory :record_false_user, class: 'User' do
       is_recordable { false }
     end
+
+    factory :user_with_colon, class: 'User' do
+      screen_id { 'twitcasting:jp' }
+    end
   end
 
   factory :not_found_user, class: 'User' do
