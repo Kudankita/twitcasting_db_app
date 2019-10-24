@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @users = User.select('id, screen_id, name, last_cas, is_recordable, is_casting').all.order('screen_id')
+    @users = User.page(params[:page])
+                 .per(10).select('id, screen_id, name, last_cas, is_recordable, is_casting').order(:screen_id)
   end
 
   def show

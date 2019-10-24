@@ -349,6 +349,21 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="bootstrap4-kaminari-views (vbundled(1.0.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/bootstrap4-kaminari-views-1.0.1/app" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/bootstrap4-kaminari-views-1.0.1/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/bootstrap4-kaminari-views-1.0.1/app" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/bootstrap4-kaminari-views-1.0.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="builder (vbundled(3.2.3)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -999,6 +1014,73 @@
           <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/json-2.2.0/tools" />
           <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/json-2.2.0/diagrams" />
           <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/json-2.2.0/references" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="kaminari (vbundled(1.1.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-1.1.1/lib" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-1.1.1/misc" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-1.1.1/gemfiles" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-1.1.1/lib" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-1.1.1/misc" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-1.1.1/gemfiles" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-1.1.1/misc" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-1.1.1/gemfiles" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="kaminari-actionview (vbundled(1.1.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-actionview-1.1.1/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-actionview-1.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="kaminari-activerecord (vbundled(1.1.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-activerecord-1.1.1/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-activerecord-1.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="kaminari-core (vbundled(1.1.1)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-core-1.1.1/app" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-core-1.1.1/lib" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-core-1.1.1/config" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-core-1.1.1/app" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-core-1.1.1/lib" />
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-core-1.1.1/config" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/vendor/bundle/ruby/2.5.0/gems/kaminari-core-1.1.1/config" />
         </excluded>
       </library>
     </orderEntry>
