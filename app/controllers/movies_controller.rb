@@ -44,6 +44,9 @@ class MoviesController < ApplicationController
     RecordMovieJob.perform_later params[:movie][:hls_url], movie_file_name, fixed_screen_id
   end
 
+  def index;
+  end
+
   private
 
   def movie_params
