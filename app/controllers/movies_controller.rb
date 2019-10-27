@@ -44,7 +44,9 @@ class MoviesController < ApplicationController
     RecordMovieJob.perform_later params[:movie][:hls_url], movie_file_name, fixed_screen_id
   end
 
-  def index;
+  def index
+    @movies = Movie.joins('inner join users on movies.user_id = users.user_id').page(params[:page]).per(10)
+                  .select('movies.updated_at,users.name,movies.title,users.is_recordable').order(updated_at: 'DESC')
   end
 
   private
