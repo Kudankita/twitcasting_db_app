@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
   resources :developers, only: %i[new create]
   post 'movie' => 'movies#new'
+  get 'movies' => 'movies#index'
 end

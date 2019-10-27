@@ -1,0 +1,33 @@
+<table class="table table-bordered mt-2">
+  <thead>
+  <tr>
+    <!--updated_at-->
+    <th>放送日時</th>
+    <!--name-->
+    <th>ユーザの名前</th>
+    <!--title-->
+    <th>タイトル</th>
+    <!--is_recordable-->
+    <th>録画対象</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @movies.each do |movie| %>
+    <tr>
+      <td><%= movie.updated_at.to_s :custom %></td>
+      <td><%= movie.name %></td>
+      <td><%= movie.title %></td>
+      <td>
+        <% if movie.is_recordable == 1 %>
+          ◯
+        <% elsif movie.is_recordable == 0 %>
+          ×
+        <% else %>
+          <%= movie.is_recordable %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= paginate @movies, theme: 'twitter-bootstrap-4', pagination_class: "justify-content-center" %>
