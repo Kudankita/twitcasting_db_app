@@ -23,5 +23,12 @@ FactoryBot.define do
     current_view_count { 1 }
     total_view_count { 1 }
     hls_url { 1 }
+    created_at { '2016-05-29 00:50:00' }
+    updated_at { '2016-05-29 00:55:00' }
+    factory :movie2, class: 'Movie' do
+      id { 189_037_370 }
+      title { 'NewerMyString' }
+      updated_at { '2016-05-29 00:56:00' }
+    end
   end
 end
