@@ -12,40 +12,40 @@ RSpec.describe 'Movies', type: :request do
       { signature: '09',
         event: 'livestart',
         movie: {
-            id: '189037369',
-            user_id: '182224938',
-            title: 'ライブ',
-            subtitle: 'ライブ',
-            last_owner_comment: 'もいもい',
-            category: 'girls',
-            link: 'http://twitcasting.tv/twitcasting_jp/movie/189037369',
-            is_live: true,
-            is_recorded: false,
-            comment_count: 2124,
-            large_thumbnail: 'http',
-            small_thumbnail: 'http',
-            country: 'jp',
-            duration: 1186,
-            created: 1_438_500_282,
-            is_collabo: false,
-            is_protected: false,
-            max_view_count: 1675,
-            current_view_count: 20_848,
-            total_view_count: 20_848,
-            hls_url: 'm3u8'
+          id: '189037369',
+          user_id: '182224938',
+          title: 'ライブ',
+          subtitle: 'ライブ',
+          last_owner_comment: 'もいもい',
+          category: 'girls',
+          link: 'http://twitcasting.tv/twitcasting_jp/movie/189037369',
+          is_live: true,
+          is_recorded: false,
+          comment_count: 2124,
+          large_thumbnail: 'http',
+          small_thumbnail: 'http',
+          country: 'jp',
+          duration: 1186,
+          created: 1_438_500_282,
+          is_collabo: false,
+          is_protected: false,
+          max_view_count: 1675,
+          current_view_count: 20_848,
+          total_view_count: 20_848,
+          hls_url: 'm3u8'
         },
         broadcaster: {
-            id: '182224938',
-            screen_id: 'twitcasting_jp',
-            name: 'ツイキャス公式',
-            image: 'http',
-            profile: 'ツイキャス',
-            level: 24,
-            last_movie_id: '189037369',
-            is_live: false,
-            supporter_count: 0,
-            supporting_count: 0,
-            created: 0
+          id: '182224938',
+          screen_id: 'twitcasting_jp',
+          name: 'ツイキャス公式',
+          image: 'http',
+          profile: 'ツイキャス',
+          level: 24,
+          last_movie_id: '189037369',
+          is_live: false,
+          supporter_count: 0,
+          supporting_count: 0,
+          created: 0
         } }
     end
     before do
@@ -292,6 +292,27 @@ RSpec.describe 'Movies', type: :request do
         it 'ディレクトリが存在すること' do
           expect(Dir).to exist('movies/target/twitcasting_jp')
         end
+      end
+    end
+  end
+
+  describe 'GET /movies' do
+    let(:developer) { FactoryBot.create(:developer) }
+    context 'ログインしていないとき' do
+      it 'ログインページへリダイレクトする' do
+        get movies_path
+        expect(response).to redirect_to login_path
+      end
+      it 'リダイレクト後エラーメッセージが表示される' do
+        get movies_path
+        expect(flash[:notice]).to eq 'ログインが必要です'
+      end
+    end
+    context 'ログインしているとき' do
+      it '正常なレスポンスを返す' do
+        post login_path, params: { session: { email: developer.email, password: developer.password } }
+        get movies_path
+        expect(response).to have_http_status '200'
       end
     end
   end
