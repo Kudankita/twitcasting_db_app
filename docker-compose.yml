@@ -9,6 +9,21 @@ services:
     ports:
       - "33306:3306"
 
+  redis:
+    image: redis:5.0-alpine
+    ports:
+      - 6379
+
+  sidekiq:
+    build: .
+    env_file: production.env
+    command: bundle exec sidekiq
+    volumes:
+      - .:/myapp
+    depends_on:
+      - db
+      - redis
+
   web:
     build: .
     env_file: production.env
@@ -19,6 +34,8 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - redis
+
 volumes:
   tw-db-data:
     driver: local

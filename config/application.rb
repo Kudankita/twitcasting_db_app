@@ -31,5 +31,7 @@ module TwitcastingDbApp
     config.generators.system_tests = nil
 
     config.time_zone = 'Tokyo'
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
