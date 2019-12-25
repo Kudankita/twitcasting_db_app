@@ -43,5 +43,11 @@
         <property name="enable_load_extension" value="true" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="@127.0.0.1" uuid="0c17b6e8-2a68-4800-8247-e2bb230bbb8d">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:33306</jdbc-url>
+    </data-source>
   </component>
 </project>

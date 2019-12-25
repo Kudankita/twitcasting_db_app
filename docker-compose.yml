@@ -1,0 +1,41 @@
+version: '3'
+services:
+  db:
+    image: mariadb:10.4.6
+    env_file: production.env
+    volumes:
+      - tw-db-data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "33306:3306"
+
+  redis:
+    image: redis:5.0-alpine
+    ports:
+      - 6379
+
+  sidekiq:
+    build: .
+    env_file: production.env
+    command: bundle exec sidekiq
+    volumes:
+      - .:/myapp
+    depends_on:
+      - db
+      - redis
+
+  web:
+    build: .
+    env_file: production.env
+    command: bundle exec rails s -e production
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  tw-db-data:
+    driver: local
