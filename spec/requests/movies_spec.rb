@@ -48,11 +48,13 @@ RSpec.describe 'Movies', type: :request do
           created: 0
         } }
     end
+
     before do
       # 録画動画ファイルのファイル名を特定するために時間を固定
       clear_enqueued_jobs
       travel_to Time.zone.local(2004, 11, 24, 11, 44, 44)
     end
+
     after do
       travel_back
     end
@@ -65,6 +67,7 @@ RSpec.describe 'Movies', type: :request do
 
     context '録画対象のユーザーがテーブルに登録している場合' do
       let!(:user_to_record) { FactoryBot.create(:user) }
+
       context '録画する必要のあるIDのPOSTを受信したとき' do
         context '保存先のディレクトリが存在しないとき' do
           before do
@@ -126,6 +129,7 @@ RSpec.describe 'Movies', type: :request do
           let!(:movie) { FactoryBot.create(:movie) }
           let(:event) { 'liveend' }
           let(:comments_at_liveend) { 5000 }
+
           before do
             # event webhook送信の契機をライブ終了を意味するliveendにして試験
             movie_params_liveend = movie_params
@@ -202,8 +206,8 @@ RSpec.describe 'Movies', type: :request do
     end
 
     context '録画はしないIDのPOSTを正常に受信したとき' do
-      let!(:user_not_record) { FactoryBot.create(:record_false_user) }
       before do
+        FactoryBot.create(:record_false_user)
         post movie_path, params: movie_params
       end
 
@@ -282,6 +286,7 @@ RSpec.describe 'Movies', type: :request do
 
         it_behaves_like 'レスポンス'
       end
+
       context '保存先のディレクトリがすでに存在する場合' do
         before do
           # すでにディレクトリが存在する状況をつくる
@@ -298,16 +303,19 @@ RSpec.describe 'Movies', type: :request do
 
   describe 'GET /movies' do
     let(:developer) { FactoryBot.create(:developer) }
+
     context 'ログインしていないとき' do
       it 'ログインページへリダイレクトする' do
         get movies_path
         expect(response).to redirect_to login_path
       end
+
       it 'リダイレクト後エラーメッセージが表示される' do
         get movies_path
         expect(flash[:notice]).to eq 'ログインが必要です'
       end
     end
+
     context 'ログインしているとき' do
       it '正常なレスポンスを返す' do
         post login_path, params: { session: { email: developer.email, password: developer.password } }

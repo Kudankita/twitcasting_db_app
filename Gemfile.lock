@@ -122,6 +122,7 @@ GEM
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    jaro_winkler (1.5.4)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
     jquery-rails (4.3.5)
@@ -169,6 +170,7 @@ GEM
     nio4r (2.5.1)
     nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
+    parallel (1.19.1)
     parser (2.6.4.0)
       ast (~> 2.4.0)
     path_expander (1.0.4)
@@ -235,6 +237,21 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.2)
+    rubocop (0.78.0)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.6)
+      rainbow (>= 2.2.2, < 4.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    rubocop-performance (1.5.2)
+      rubocop (>= 0.71.0)
+    rubocop-rails (2.4.1)
+      rack (>= 1.1)
+      rubocop (>= 0.72.0)
+    rubocop-rspec (1.37.1)
+      rubocop (>= 0.68.1)
+    ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
     ruby_parser (3.13.1)
       sexp_processor (~> 4.9)
@@ -310,6 +327,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
+    unicode-display_width (1.6.0)
     vcr (5.0.0)
     virtus (1.0.5)
       axiom-types (~> 0.1)
@@ -355,6 +373,10 @@ DEPENDENCIES
   puma (~> 3.12)
   rails (~> 5.2.3)
   rspec-rails
+  rubocop
+  rubocop-performance
+  rubocop-rails
+  rubocop-rspec
   rubycritic
   sass-rails (~> 5.0)
   selenium-webdriver

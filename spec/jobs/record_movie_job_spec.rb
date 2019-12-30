@@ -15,11 +15,11 @@ RSpec.describe RecordMovieJob, type: :job do
     FileUtils.mkdir_p("movies/target/#{screen_id}")
     # tmpディレクトリは最初から存在するはずだがfakeFSを使っているとまず作成しなければならないようなので作成
     FileUtils.mkdir_p('movies/tmp')
-    ffmpeg_mock = double('FFMPEG_mock')
+    ffmpeg_mock = class_double('FFMPEG_mock')
     allow(ffmpeg_mock).to receive(:transcode) { FileUtils.touch "movies/tmp/#{movie_file_name}" }
-    allow_any_instance_of(RecordMovieJob).to receive(:ffmpeg_recorder).and_return(ffmpeg_mock)
+    allow_any_instance_of(described_class).to receive(:ffmpeg_recorder).and_return(ffmpeg_mock)
 
-    RecordMovieJob.perform_now 'url', movie_file_name, screen_id
+    described_class.perform_now 'url', movie_file_name, screen_id
   end
 
   it '録画終了後動画ファイルがtargetフォルダ以下に移動すること' do
