@@ -30,6 +30,7 @@ class User < ApplicationRecord
     register_webhook
   end
 
+  # @param [Boolean] param_recordable webhookに登録する場合はtrue、解除する場合はfalse
   def update_webhook_status(param_recordable)
     wait_api Constants::API_INTERVAL
     if param_recordable
@@ -41,6 +42,7 @@ class User < ApplicationRecord
     end
   end
 
+  # @param [Integer] wait_interval 待機する時間
   def wait_api(wait_interval)
     loop do
       break unless Timer.where('updated_at < ?', Time.current - wait_interval.second).where(id: Constants::TIMER_ID).update(created_at: Time.current).empty?

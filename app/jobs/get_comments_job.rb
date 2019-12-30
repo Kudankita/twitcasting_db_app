@@ -10,6 +10,9 @@ class GetCommentsJob < ApplicationJob
   SAVED_FILE_DIR = 'movies/target/'
 
   # rubocop:disable all
+  # @param [String] movie_id
+  # @param [String] screen_id
+  # @param [String] comment_json_name コメントを追記する対象ファイル名
   def perform(movie_id, screen_id, comment_json_name)
     logger.info "#{screen_id}のコメント取得開始"
     File.open("#{TMP_FILE_DIR}#{comment_json_name}", 'w') do |file|
@@ -53,6 +56,9 @@ class GetCommentsJob < ApplicationJob
 
   private
 
+  # @param [String] movie_id
+  # @param [Integer] slice_id
+  # @return [HTTP::Message] コメント取得APIのレスポンス
   def get_comments(movie_id, slice_id)
     comments_uri = URI("#{Constants::SERVER_NAME}/movies/#{movie_id}/comments")
     comments_uri.query = { limit: 50, slice_id: slice_id }.to_param
@@ -66,6 +72,8 @@ class GetCommentsJob < ApplicationJob
     comments_response
   end
 
+  # @param [String] file_name 取得したコメントを書き込むJSONファイル
+  # @param [Hash] response_hash コメント取得APIのレスポンスをパースしたHASH
   def write_response(file_name, response_hash)
     response_hash['comments'].each { |comment| comment['comment_time'] = Time.zone.at comment['created'] }
     File.open(file_name) do |io|
