@@ -17,7 +17,7 @@ services:
   sidekiq:
     build: .
     env_file: production.env
-    command: bundle exec sidekiq
+    command: bundle exec sidekiq -e production
     volumes:
       - .:/myapp
     depends_on:
