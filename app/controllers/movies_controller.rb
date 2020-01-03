@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# MoviesController
 class MoviesController < ApplicationController
   before_action :authenticate_user, only: [:index]
   # 外部からのpostを受けたときにCSRF対策をしないようにするために設定
@@ -8,6 +9,7 @@ class MoviesController < ApplicationController
   # 動画の拡張子
   MOVIE_EXTENSION = '.mp4'
 
+  # rubocop:disable all
   def new
     user = User.find_by user_id: params[:movie][:user_id]
     user&.update(last_cas: Time.zone.at(movie_params[:created].to_i).to_s(:datetime), is_casting: movie_params[:is_live],
@@ -15,7 +17,6 @@ class MoviesController < ApplicationController
                  current_view_count: movie_params[:current_view_count],
                  total_view_count: movie_params[:total_view_count])
     # ライブ終了のwebhook受信時に録画する必要はないのでその場合終了する
-    # ただし、コメントの取得終了のために今後実装を変更する必要はある
     if params[:event] == 'liveend'
       logger.info "user_id: #{params[:movie][:user_id]}の放送終了"
       movie = Movie.find_or_initialize_by(id: params[:movie][:id])
@@ -34,16 +35,18 @@ class MoviesController < ApplicationController
     Movie.create movie_params
 
     # 「:」がファイル、ディレクトリ名に含まれているとWindowsで困るので置換
-    fixed_screen_id = user.screen_id.gsub(':', '_')
+    fixed_screen_id = user.screen_id.tr(':', '_')
 
     FileUtils.mkdir_p "movies/target/#{fixed_screen_id}" unless Dir.exist? "movies/target/#{fixed_screen_id}"
 
     movie_file_name = "#{fixed_screen_id}(#{Time.zone.now.to_s :custom})#{MOVIE_EXTENSION}"
     # Job起動はこの順番でないと2つ目のJobが起動しない
-    GetCommentsJob.perform_later params[:movie][:id], user.screen_id.gsub(':', '_'),
+    GetCommentsJob.perform_later params[:movie][:id], user.screen_id.tr(':', '_'),
                                  "#{fixed_screen_id}(#{Time.zone.now.to_s :custom}).json"
     RecordMovieJob.perform_later params[:movie][:hls_url], movie_file_name, fixed_screen_id
   end
+
+  # rubocop:enable all
 
   def index
     @movies = Movie.joins('inner join users on movies.user_id = users.user_id').page(params[:page]).per(10)

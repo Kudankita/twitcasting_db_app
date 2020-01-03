@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# GetCommentsJob
 class GetCommentsJob < ApplicationJob
   queue_as :default
 
@@ -8,6 +9,10 @@ class GetCommentsJob < ApplicationJob
   # 完成したJSONファイルの配置場所
   SAVED_FILE_DIR = 'movies/target/'
 
+  # rubocop:disable all
+  # @param [String] movie_id
+  # @param [String] screen_id
+  # @param [String] comment_json_name コメントを追記する対象ファイル名
   def perform(movie_id, screen_id, comment_json_name)
     logger.info "#{screen_id}のコメント取得開始"
     File.open("#{TMP_FILE_DIR}#{comment_json_name}", 'w') do |file|
@@ -17,7 +22,7 @@ class GetCommentsJob < ApplicationJob
 
     slice_id = nil
     get_count = 0
-    while Movie.find(movie_id).is_live and get_count < 2000
+    while Movie.find(movie_id).is_live && (get_count < 2000)
       # while文が何回実行されたかをカウントする。liveendのwebhookを受信できず永遠に取得し続けることを防ぐ
       # 2000だと3時間以上は取得を続行
       get_count += 1
@@ -28,7 +33,7 @@ class GetCommentsJob < ApplicationJob
         comments_response = get_comments movie_id, slice_id
         logger.debug comments_response.body
         response_hash = JSON.parse(comments_response.body)
-        if comments_response.status_code != 200 or response_hash['comments'].empty?
+        if (comments_response.status_code != 200) || response_hash['comments'].empty?
           sleep rand(Constants::API_INTERVAL + 1) + Constants::API_INTERVAL
           next
         end
@@ -47,8 +52,13 @@ class GetCommentsJob < ApplicationJob
     logger.info "#{screen_id}のコメント取得終了"
   end
 
+  # rubocop:enable all
+
   private
 
+  # @param [String] movie_id
+  # @param [Integer] slice_id
+  # @return [HTTP::Message] コメント取得APIのレスポンス
   def get_comments(movie_id, slice_id)
     comments_uri = URI("#{Constants::SERVER_NAME}/movies/#{movie_id}/comments")
     comments_uri.query = { limit: 50, slice_id: slice_id }.to_param
@@ -62,10 +72,12 @@ class GetCommentsJob < ApplicationJob
     comments_response
   end
 
+  # @param [String] file_name 取得したコメントを書き込むJSONファイル
+  # @param [Hash] response_hash コメント取得APIのレスポンスをパースしたHASH
   def write_response(file_name, response_hash)
     response_hash['comments'].each { |comment| comment['comment_time'] = Time.zone.at comment['created'] }
     File.open(file_name) do |io|
-      written_hash = JSON.load io
+      written_hash = JSON.parse io.read
       written_hash['comments'] = written_hash['comments'] | response_hash['comments']
       written_hash['comments'].sort_by { |a| a[:id] }
       File.open(file_name, 'w') do |io2|

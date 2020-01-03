@@ -67,7 +67,7 @@ RSpec.configure do |config|
 
   config.include ActiveSupport::Testing::TimeHelpers
 
-  config.before(:each) do |example|
+  config.before do |example|
     if example.metadata[:type] == :system
       if example.metadata[:js]
         driven_by :selenium_chrome_headless, screen_size: [1400, 1400]

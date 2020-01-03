@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Rails/HelperInstanceVariable
+# SessionsHelper
 module SessionsHelper
   # 渡されたユーザーでログインする
   def log_in(developer)
@@ -24,9 +26,10 @@ module SessionsHelper
 
   def authenticate_user
     current_developer
-    if @current_developer.nil?
-      flash[:notice] = 'ログインが必要です'
-      redirect_to(login_url)
-    end
+    return unless @current_developer.nil?
+
+    flash[:notice] = 'ログインが必要です'
+    redirect_to(login_url)
   end
 end
+# rubocop:enable Rails/HelperInstanceVariable

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Developer
 class Developer < ApplicationRecord
   before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 50 }

@@ -8,9 +8,6 @@
       <remarks>$PROJECT_DIR$/config/database.yml</remarks>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/development.sqlite3</jdbc-url>
-      <driver-properties>
-        <property name="enable_load_extension" value="true" />
-      </driver-properties>
     </data-source>
     <data-source source="LOCAL" name="Rails twitcasting_db_app: production" uuid="67c868f6-55f1-4f51-9553-403f75421d97">
       <driver-ref>sqlite.xerial</driver-ref>
@@ -19,18 +16,12 @@
       <remarks>$PROJECT_DIR$/config/database.yml</remarks>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/production.sqlite3</jdbc-url>
-      <driver-properties>
-        <property name="enable_load_extension" value="true" />
-      </driver-properties>
     </data-source>
     <data-source source="LOCAL" name="test.sqlite3" uuid="42187145-227e-4b5b-b748-1b36969d48b9">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/test.sqlite3</jdbc-url>
-      <driver-properties>
-        <property name="enable_load_extension" value="true" />
-      </driver-properties>
     </data-source>
     <data-source source="LOCAL" name="Rails twitcasting_db_app: test" uuid="8591eb9c-69ee-44eb-9671-69de379c25f2">
       <driver-ref>sqlite.xerial</driver-ref>
@@ -39,9 +30,6 @@
       <remarks>$PROJECT_DIR$/config/database.yml</remarks>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/test.sqlite3</jdbc-url>
-      <driver-properties>
-        <property name="enable_load_extension" value="true" />
-      </driver-properties>
     </data-source>
     <data-source source="LOCAL" name="@127.0.0.1" uuid="0c17b6e8-2a68-4800-8247-e2bb230bbb8d">
       <driver-ref>mysql.8</driver-ref>

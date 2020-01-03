@@ -16,14 +16,14 @@ RSpec.describe 'Developers', type: :system do
 
     it 'ログインしてからログアウトするとログインページ以外が閲覧できなくなる' do
       click_link 'サインアウト'
-      expect(current_path).to eq login_path
+      expect(page).to have_current_path login_path, ignore_query: true
       # サインアウト後にUser一覧画面に遷移しようとするとログインページにリダイレクトしエラーメッセージが表示
       visit users_path
-      expect(current_path).to eq login_path
+      expect(page).to have_current_path login_path, ignore_query: true
       expect(page).to have_content 'ログインが必要です'
       # User新規作成ページも同様
       visit new_user_path
-      expect(current_path).to eq login_path
+      expect(page).to have_current_path login_path, ignore_query: true
       expect(page).to have_content 'ログインが必要です'
     end
   end

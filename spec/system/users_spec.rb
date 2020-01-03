@@ -7,6 +7,7 @@ RSpec.describe 'Users', type: :system do
   let!(:user) { FactoryBot.create(:user) }
   let!(:user2) { FactoryBot.create(:user2) }
   let!(:user3) { FactoryBot.create(:user3) }
+
   before do
     FactoryBot.create(:timer)
     # まずログインする
@@ -27,7 +28,7 @@ RSpec.describe 'Users', type: :system do
       click_button '登録'
     end.to change(User, :count).by(1)
     # 一覧ページへ遷移すること
-    expect(current_path).to eq users_path
+    expect(page).to have_current_path users_path, ignore_query: true
   end
 
   it 'screen_idを入力しないで登録しようとして失敗' do
@@ -40,7 +41,7 @@ RSpec.describe 'Users', type: :system do
       click_button '登録'
     end.to change(User, :count).by(0)
     # 現状失敗時にusers_pathへ遷移するのでそれを検証する
-    expect(current_path).to eq users_path
+    expect(page).to have_current_path users_path, ignore_query: true
     # 空欄ではいけない、というエラーメッセージが出ていること
     expect(page).to have_content("Screen can't be blank")
   end
@@ -54,7 +55,7 @@ RSpec.describe 'Users', type: :system do
       click_button '登録'
     end.to change(User, :count).by(0)
     # 現状失敗時にusers_pathへ遷移するのでそれを検証する
-    expect(current_path).to eq users_path
+    expect(page).to have_current_path users_path, ignore_query: true
     # Userがみつからない、というエラーメッセージが出ていること
     expect(page).to have_content('Not Found')
   end
@@ -62,15 +63,15 @@ RSpec.describe 'Users', type: :system do
   context 'ユーザーの一覧機能' do
     it 'ユーザー一覧ページにユーザーの情報がscreen_idでソートされて表示されている' do
       screen_ids = all('td:nth-child(1)').map(&:text)
-      expect(screen_ids).to eq %w[switcasting_jp twitcasting_jp uwitcasting_jp]
-      expect(current_path).to eq users_path
+      expect(screen_ids).to eq [user2.screen_id, user.screen_id, user3.screen_id]
+      expect(page).to have_current_path users_path, ignore_query: true
     end
   end
 
   context 'ユーザーの詳細情報閲覧機能' do
     it 'リンクをクリックしたユーザーの詳細情報が表示されている' do
       click_link user.name
-      expect(current_path).to eq user_path user
+      expect(page).to have_current_path user_path user
       expect(page).to have_content(user.user_id)
       expect(page).to have_content(user.screen_id)
       expect(page).to have_content(user.name)
@@ -82,6 +83,7 @@ RSpec.describe 'Users', type: :system do
       let(:not_found_user) { FactoryBot.create(:not_found_user, name: 'not_found', is_recordable: false) }
       let(:changed_name) { '変更後の名前' }
       let(:changed_remark) { '備考入力' }
+
       it 'ユーザーの情報を更新' do
         visit edit_user_path user
         fill_in 'ユーザー名', with: changed_name
@@ -89,7 +91,7 @@ RSpec.describe 'Users', type: :system do
         click_button '登録'
         expect(user.reload.name).to eq changed_name
         expect(user.reload.remark).to eq changed_remark
-        expect(current_path).to eq users_path
+        expect(page).to have_current_path users_path, ignore_query: true
         expect(page).to have_content(changed_name)
       end
 
@@ -108,7 +110,7 @@ RSpec.describe 'Users', type: :system do
         expect do
           click_link '削除'
         end.to change(User, :count).by(-1)
-        expect(current_path).to eq users_path
+        expect(page).to have_current_path users_path, ignore_query: true
         expect(page).to have_content('ユーザー情報の削除を完了しました。')
         expect(page).not_to have_content('twitcasting_jp')
       end

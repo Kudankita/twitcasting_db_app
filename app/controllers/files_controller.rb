@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# FilesController
 class FilesController < ApplicationController
   before_action :authenticate_user
 

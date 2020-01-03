@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# UsersController
 class UsersController < ApplicationController
   before_action :authenticate_user
 
@@ -18,7 +19,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user].permit(:screen_id, :is_compression, :remark))
-    if Constants::REGISTER_WEBHOOK_OK_RESPONSE.include?(@user.register_and_save_user.status_code) and @user.save
+    if Constants::REGISTER_WEBHOOK_OK_RESPONSE.include?(@user.register_and_save_user.status_code) && @user.save
       redirect_to users_path, flash: { info: 'ユーザーの新規登録に完了しました。' }
     else
       render 'new'
@@ -31,20 +32,16 @@ class UsersController < ApplicationController
   end
 
   def update
-    logger.debug params
     @user = User.find(params[:id])
     before_recordable = @user.is_recordable
     @user.assign_attributes update_user_params
-    @user.update_webhook_status @user.is_recordable if @user.valid? and @user.is_recordable != before_recordable
+    @user.update_webhook_status @user.is_recordable if @user.valid? && (@user.is_recordable != before_recordable)
     unless @user.errors.empty?
       render 'edit'
       return
     end
-    if @user.save
-      redirect_to users_path, flash: { info: 'ユーザー情報の更新を完了しました。' }
-    else
-      render 'edit'
-    end
+    @user.save!
+    redirect_to users_path, flash: { info: 'ユーザー情報の更新を完了しました。' }
   end
 
   def destroy

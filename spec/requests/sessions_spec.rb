@@ -6,12 +6,13 @@ RSpec.describe 'Sessions', type: :request do
   describe 'GET /sessions' do
     it 'ログインページに遷移すると正常なレスポンスが帰ってくる' do
       get login_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
   describe 'POST /sessions' do
     let(:developer) { FactoryBot.create(:developer) }
+
     context '正常なデータがログインページからPOSTされたとき' do
       it '正常にログインできてユーザー一覧画面に遷移する' do
         post login_path, params: { session: { email: developer.email, password: developer.password } }
@@ -36,6 +37,7 @@ RSpec.describe 'Sessions', type: :request do
         expect(session[:developer_id]).to eq nil
       end
     end
+
     context 'テーブルに登録されているのと違う情報がPOSTされたとき' do
       it 'ログインできずflashにエラーメッセージが表示される' do
         post login_path, params: { session: { email: 'b' * 6, password: 'b' * 6 } }
@@ -55,6 +57,7 @@ RSpec.describe 'Sessions', type: :request do
         delete logout_path
         expect(session[:developer_id]).to eq nil
       end
+
       it 'ログインページにリダイレクトする' do
         delete logout_path
         expect(response).to redirect_to login_url
