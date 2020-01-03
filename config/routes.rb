@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'sidekiq/web'
-
 Rails.application.routes.draw do
   get 'files/delete'
   get 'sessions/new'
@@ -16,6 +14,4 @@ Rails.application.routes.draw do
   resources :developers, only: %i[new create]
   post 'movie' => 'movies#new'
   get 'movies' => 'movies#index'
-
-  mount Sidekiq::Web => '/sidekiq'
 end
