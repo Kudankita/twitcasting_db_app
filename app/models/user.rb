@@ -55,7 +55,7 @@ class User < ApplicationRecord
     wait_api Constants::API_INTERVAL
     http_client = HTTPClient.new
     header = { Accept: 'application/json', 'X-Api-Version': '2.0',
-               Authorization: "Bearer #{Rails.application.credentials.dig(:twitcasting, :access_token)}" }
+               Authorization: "Basic #{Rails.application.credentials.dig(:twitcasting, :basic_access_token)}" }
     user_info_uri = URI("#{Constants::SERVER_NAME}/users/#{screen_id}")
     get_response = http_client.get user_info_uri, header: header
     logger.debug get_response.body

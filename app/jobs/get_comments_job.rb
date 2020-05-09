@@ -66,7 +66,7 @@ class GetCommentsJob < ApplicationJob
 
     http_client = HTTPClient.new
     header = { Accept: 'application/json', 'X-Api-Version': '2.0',
-               Authorization: "Bearer #{Rails.application.credentials.dig(:twitcasting, :access_token)}" }
+               Authorization: "Basic #{Rails.application.credentials.dig(:twitcasting, :basic_access_token)}" }
     comments_response = http_client.get(comments_uri, header: header)
     logger.debug comments_response.body
     comments_response
