@@ -1,7 +1,7 @@
 FROM ruby:2.5.5
 
 RUN apt-get update -qq && apt-get install -y --no-install-recommends  \
-    ffmpeg=7:4.1.4-1~deb10u1 \
+    ffmpeg=7:4.1.6-1~deb10u1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && gem install bundler -v 2.0.1
