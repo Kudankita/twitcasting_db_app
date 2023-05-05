@@ -1,16 +1,16 @@
 FROM ruby:2.5.5
 
 RUN apt-get update -qq && apt-get install -y --no-install-recommends  \
-    ffmpeg=7:4.1.6-1~deb10u1 \
+    ffmpeg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && gem install bundler -v 2.0.1
 
 WORKDIR /myapp
-COPY Gemfile /myapp/Gemfile
-COPY Gemfile.lock /myapp/Gemfile.lock
+COPY . /myapp
 RUN bundle install
 
+RUN bundle exec rake assets:precompile
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
